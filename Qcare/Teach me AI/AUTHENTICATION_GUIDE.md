@@ -66,12 +66,12 @@ export const authConfig = {
 
 ### Token Purposes
 
-| Token Type | Purpose | Expiry | Secret |
-|------------|---------|--------|--------|
-| **Access Token** | API request authentication | 15 minutes | `masterSecret + "_ACCESS_TOKEN"` |
-| **Refresh Token** | Get new access tokens | 24 hours | `masterSecret + "_REFRESH_TOKEN"` |
-| **MFA Token** | MFA verification flow | 5 minutes | `masterSecret + "_MFA_TOKEN"` |
-| **Reset Token** | Password reset flow | Configurable | `masterSecret + "_RESET_TOKEN"` |
+| Token Type        | Purpose                    | Expiry       | Secret                            |
+| ----------------- | -------------------------- | ------------ | --------------------------------- |
+| **Access Token**  | API request authentication | 15 minutes   | `masterSecret + "_ACCESS_TOKEN"`  |
+| **Refresh Token** | Get new access tokens      | 24 hours     | `masterSecret + "_REFRESH_TOKEN"` |
+| **MFA Token**     | MFA verification flow      | 5 minutes    | `masterSecret + "_MFA_TOKEN"`     |
+| **Reset Token**   | Password reset flow        | Configurable | `masterSecret + "_RESET_TOKEN"`   |
 
 ### Token Payload Structure
 
