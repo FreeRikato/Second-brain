@@ -19,3 +19,22 @@ Also, being active on X, LinkedIn and Medium could be helpful for me. I have to 
 
 > More importantly, i should follow a strict hands-on coding and use AI only for doubts like a senior engineer instead of asking it to generate code or autocomplete when i code i.e. no supermaven or cursor tab.
 
+## Companies to focus
+
+1. **Browser Use** (YC W25)
+2. **Mastra** (YC W25)
+3. **HumanLayer** (YC F24)
+4. **Confident AI (DeepEval)**
+5. **Glasskube** (YC S24)
+6. **Unsloth AI** (YC S24)
+7. **Assistant UI** (YC)
+
+| Layer              | Company      |
+| ------------------ | ------------ |
+| Browser control    | Browser Use  |
+| Agent framework    | Mastra       |
+| Human control      | HumanLayer   |
+| Evaluation         | Confident AI |
+| Deployment / infra | Glasskube    |
+| Model performance  | Unsloth      |
+| UI / UX            | Assistant UI |
