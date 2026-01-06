@@ -13,7 +13,9 @@ Then, i should do a cold outreach to the CTO or Founder of the startup/company a
 
 Also, being active on X, LinkedIn and Medium could be helpful for me. I have to prepare a blog and video for the work i have done and use the platforms accordingly like:
 
-**X** = Post often about my thoughts on the company along with once a time technical post with the summarized blog (along with link to it) and video
-**LinkedIn** = Technical post with the summarized blog (along with link) and the video
-**Medium** = Post the blog and use its link in X and LinkedIn
+- **X** = Post often about my thoughts on the company along with once a time technical post with the summarized blog (along with link to it) and video
+- **LinkedIn** = Technical post with the summarized blog (along with link) and the video
+- **Medium** = Post the blog and use its link in X and LinkedIn
+
+> More importantly, i should follow a strict hands-on coding and use AI only for doubts like a senior engineer instead of asking it to generate code or autocomplete when i code i.e. no supermaven or cursor tab.
 
