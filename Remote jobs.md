@@ -38,3 +38,5 @@ Also, being active on X, LinkedIn and Medium could be helpful for me. I have to 
 | Deployment / infra | Glasskube    |
 | Model performance  | Unsloth      |
 | UI / UX            | Assistant UI |
+
+
