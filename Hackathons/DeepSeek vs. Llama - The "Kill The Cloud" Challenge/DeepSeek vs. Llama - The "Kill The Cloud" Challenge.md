@@ -3,6 +3,18 @@ Source:
 2. https://docs.google.com/document/d/e/2PACX-1vQDRAOEquDMVkm8nCV5AU9ArgwrUqGb_ig5NPMxNvpxP820JMtSjNDDBmQ-kKATXxr0GECcDiRMdT9H/pub
 3. https://aistudio.google.com/prompts/1eIIX_oeORwLXc7ULADT_ixRY8eFpnkC4
 
+
+| Date                                 | What to do                                                                                                                                                       |
+| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Fri, Jan 23, 2026 (Day 0)**        | Register + confirm deadline (30 Jan) • Complete Unstop profile • Join WhatsApp + Discord • Create folder `KillTheCloud_2026/` • Create “team” (only if required) |
+| **Sat, Jan 24, 2026 (Day 1)**        | Pick 1 idea (one sentence) • Define “Magic Moment” • Finalize project name • Write Problem Statement (100–200 words) • Write Solution Summary (3–6 lines)        |
+| **Sun, Jan 25, 2026 (Day 2)**        | Build slides **1–6**: Title • User + pain • Magic moment (ZERO internet) • Why on-device • Model selection • Core architecture diagram (NO CLOUD)                |
+| **Mon, Jan 26, 2026 (Day 3)**        | Build slides **7–10**: Feasibility • Risks + mitigations • Differentiation • Future scope                                                                        |
+| **Tue, Jan 27, 2026 (Day 4)**        | Add product feel: UI mock • User journey diagram • Cloud vs on-device table • Offline Mode Toggle (Fast/Reasoning/Battery Saver)                                 |
+| **Wed, Jan 28, 2026 (Day 5)**        | Polish deck: spacing/alignment/fonts • Remove text walls • Improve diagrams • Export PDF with correct file name                                                  |
+| **Thu, Jan 29, 2026 (Day 6)**        | Submission prep: paste Problem + Solution in Unstop • Upload PDF • Final spelling/link check • Prepare 60s pitch + 3 judge Q&As                                  |
+| **Fri, Jan 30, 2026 (Deadline Day)** | Final re-check • Submit early ✅ • Stay active on Discord for judging rounds                                                                                      |
+
 Todo:
 
 ## 0) Register like a pro (Day 0)

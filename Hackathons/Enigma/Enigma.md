@@ -1,6 +1,22 @@
 Source:
 1. https://unstop.com/hackathons/enigma-iit-bhu-1625255
 
+
+| Date                                | What to do                                                                                                            |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| **Fri, Jan 23, 2026**               | Join Discord (CodeFest’26), save organizer email, read rules (no sharing/discussing solutions)                        |
+| **Sat, Jan 24, 2026**               | Create project folder `enigma_2026/` + subfolders (`data/`, `notebooks/`, `src/`, `models/`, `submissions/`, `logs/`) |
+| **Sun, Jan 25, 2026**               | Setup private Git repo + `.gitignore` for `/data` and `/models` + clean first commit                                  |
+| **Mon, Jan 26, 2026**               | Build data loader template + missing value handling + categorical encoding + scaling (if needed)                      |
+| **Tue, Jan 27, 2026**               | Build CV template + metrics wrapper + training presets (LGBM/XGB/CatBoost)                                            |
+| **Wed, Jan 28, 2026**               | Create `train.py` + `predict.py` + experiment logging (`logs/exp.csv`)                                                |
+| **Thu, Jan 29, 2026**               | Hardware speed prep: fast model (<5 min) + strong model (20–45 min)                                                   |
+| **Fri, Jan 30, 2026**               | Submission discipline: naming format + `leaderboard_notes.md` + full dry-run test                                     |
+| **Sat, Jan 31, 2026 (00:00–02:00)** | First 2 hrs: read problem + baseline train + **submit within 1 hour** + verify pipeline                               |
+| **Sat, Jan 31, 2026 (Rest of day)** | Competition EDA + Track A (GBDT) + Track B (features) + Track C (leakage) + meaningful submissions                    |
+| **Sun, Feb 1, 2026**                | Hyperparameter tuning + train 3–8 models + blending/ensembling + build submission bank                                |
+| **Mon, Feb 2, 2026**                | Final day: last small gains → freeze best model → retrain cleanly → submit final early + backup ready                 |
+
 Todo:
 # ✅ Phase 0 — Registration + Setup (Today → Jan 30)
 
