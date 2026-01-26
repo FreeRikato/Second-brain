@@ -21,18 +21,18 @@ Todo:
 
 ✅ **Unstop setup**
 
-* [ ] Confirm registration + deadline: **30 Jan 2026**
-* [ ] Fill profile cleanly (headline + skills + 1–2 projects)
+* [x] Confirm registration + deadline: **30 Jan 2026**
+* [x] Fill profile cleanly (headline + skills + 1–2 projects)
 
 ✅ **Comms setup**
 
-* [ ] Join WhatsApp updates group
-* [ ] Join Discord (final judging happens here)
-* [ ] Create a single folder: `KillTheCloud_2026/`
+* [x] Join WhatsApp updates group
+* [x] Join Discord (final judging happens here)
+* [x] Create a single folder: `KillTheCloud_2026/`
 
 ✅ **Solo dev hack**
 
-* [ ] Create a “team” using a friend alt (if rules enforce 2–4)
+* [x] Create a “team” using a friend alt (if rules enforce 2–4)
   *(If they truly enforce team-only, don’t risk disqualification.)*
 
 ---

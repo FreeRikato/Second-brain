@@ -24,20 +24,20 @@ Todo:
 
 * [x] Register on Unstop (done ✅)
 * [ ] Join Discord (CodeFest’26 server)
-* [ ] Save organizer email + spam-check rules
-* [ ] Read rules: **no sharing code/data**, no discussing solutions
+* [x] Save organizer email + spam-check rules
+* [x] Read rules: **no sharing code/data**, no discussing solutions
 
 ### 0.2 Create your “war room”
 
-* [ ] Make 1 folder: `enigma_2026/`
-* [ ] Create subfolders:
+* [x] Make 1 folder: `enigma_2026/`
+* [x] Create subfolders:
   * `data/`
   * `notebooks/`
   * `src/`
   * `models/`
   * `submissions/`
   * `logs/`
-* [ ] Create a private Git repo (or local git) with:
+* [x] Create a private Git repo (or local git) with:
   * `.gitignore` for `/data`, `/models`
   * clean commit history (helps rollback)
 
@@ -45,20 +45,20 @@ Todo:
 
 You want **instant execution** once the dataset drops.
 
-* [ ] Data loader template (CSV/Parquet flexible)
-* [ ] Auto feature handling:
+* [x] Data loader template (CSV/Parquet flexible)
+* [x] Auto feature handling:
   * missing values
   * categorical encoding (one-hot / target encoding)
   * scaling (if needed)
-* [ ] Cross-validation template
-* [ ] Metrics wrapper (plug any scoring metric)
-* [ ] Model training presets ready:
+* [x] Cross-validation template
+* [x] Metrics wrapper (plug any scoring metric)
+* [x] Model training presets ready:
   * LightGBM / XGBoost / CatBoost (whichever you’re fastest with)
   * fast baseline neural net (optional)
-* [ ] “Submission generator” script:
+* [x] “Submission generator” script:
   * `train.py` → saves model
   * `predict.py` → creates `submission.csv`
-* [ ] Basic experiment tracker (even simple):
+* [x] Basic experiment tracker (even simple):
   * save params + score + timestamp in `logs/exp.csv`
 
 ### 0.4 Hardware + speed checklist
