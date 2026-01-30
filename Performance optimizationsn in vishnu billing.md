@@ -2192,3 +2192,851 @@ The key is to implement changes incrementally, measure impact at each step, and 
 **Last Updated:** 2026-01-30
 **Author:** Performance Analysis Team
 **Status:** Ready for Implementation
+
+# React Native Reanimated Optimization Plan
+## Vishnu Billing Application - Performance, UX & Smoothness Enhancement
+
+> **Status**: Draft
+> **Created**: 2026-01-30
+> **React Native Reanimated Version**: 4.1.1
+
+---
+
+## Table of Contents
+1. [Current State Analysis](#current-state-analysis)
+2. [Performance Optimization Strategies](#performance-optimization-strategies)
+3. [UX Enhancement Opportunities](#ux-enhancement-opportunities)
+4. [Animation Smoothness Improvements](#animation-smoothness-improvements)
+5. [Implementation Roadmap](#implementation-roadmap)
+6. [Best Practices Guidelines](#best-practices-guidelines)
+
+---
+
+## Current State Analysis
+
+### ✅ What's Working Well
+1. **Dependencies**: React Native Reanimated 4.1.1 and react-native-worklets 0.5.1 are properly installed
+2. **List Optimization**: `FlatList` components use `maintainVisibleContentPosition` for scroll stability
+3. **Architecture**: Clean separation with hooks, components, and services
+
+### ⚠️ Areas Needing Improvement
+
+#### 1. **Animation Library Usage**
+```typescript
+// ❌ CURRENT: Using old Animated API
+import { Animated } from "react-native";
+
+// ✅ SHOULD BE: Using Reanimated
+import Animated from "react-native-reanimated";
+```
+
+**Impact**: Old Animated API runs on JS thread, causing jank. Reanimated runs on UI thread for 60fps/120fps.
+
+#### 2. **Modal Animations**
+- `DiscountModal.tsx` uses manual `Animated.parallel` with callbacks
+- No use of layout animations for smooth enter/exit
+- Springs use old API without `withSpring` from Reanimated
+
+#### 3. **List Item Animations**
+- No entering/exiting animations for list items
+- No skeleton loading animations
+- No swipe-to-delete or other gesture-based interactions
+
+#### 4. **Loading States**
+- Basic `ActivityIndicator` without skeleton screens
+- No smooth transitions between loading and content states
+
+#### 5. **Button Interactions**
+- Basic `activeOpacity` without spring animations
+- No haptic feedback integration
+- No scale/transform feedback on press
+
+#### 6. **Navigation Transitions**
+- Default navigation transitions without customization
+- No shared element transitions between related screens
+
+---
+
+## Performance Optimization Strategies
+
+### 1. Enable Feature Flags for Performance
+
+Based on React Native 0.81+ compatibility:
+
+```json
+// package.json
+{
+  "reanimated": {
+    "staticFeatureFlags": {
+      "ANDROID_SYNCHRONOUSLY_UPDATE_UI_PROPS": true,
+      "IOS_SYNCHRONOUSLY_UPDATE_UI_PROPS": true,
+      "USE_COMMIT_HOOK_ONLY_FOR_REACT_COMMITS": true
+    }
+  }
+}
+```
+
+**Benefits**:
+- 4x faster updates for non-layout styles (opacity, transform)
+- Reduces ShadowTree commits during scrolling
+- Eliminates flickering on lists during scroll
+
+**Implementation**: Add to `package.json`, then run:
+```bash
+cd ios && pod install && cd ..
+npx expo prebuild --clean
+```
+
+### 2. Use `Animated.FlatList` with Layout Animations
+
+```typescript
+import Animated, { LinearTransition } from 'react-native-reanimated';
+
+// ✅ Replace FlatList with Animated.FlatList
+<Animated.FlatList
+  data={invoices}
+  renderItem={renderInvoiceItem}
+  itemLayoutAnimation={LinearTransition} // Smooth layout changes
+  keyExtractor={(item) => item.id}
+/>
+```
+
+**Benefits**:
+- Automatic animations when items reorder
+- Smooth height changes without remounting
+- No layout flicker on data updates
+
+### 3. Optimize Gesture Handlers
+
+Current code doesn't use gesture handlers. Add for:
+- Swipe-to-delete on invoice items
+- Pull-to-refresh
+- Long-press to select mode
+
+```typescript
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
+
+function InvoiceItem({ item, onDelete }) {
+  const translateX = useSharedValue(0);
+
+  const panGesture = Gesture.Pan()
+    .activeOffsetX([-10, 10])
+    .onChange((event) => {
+      translateX.value = event.translationX;
+    })
+    .onEnd(() => {
+      if (translateX.value < -100) {
+        // Delete threshold reached
+        runOnJS(() => onDelete(item.id))();
+        translateX.value = withTiming(-500); // Animate out
+      } else {
+        translateX.value = withSpring(0); // Snap back
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: translateX.value }]
+  }));
+
+  return (
+    <GestureDetector gesture={panGesture}>
+      <Animated.View style={animatedStyle}>
+        {/* Item content */}
+      </Animated.View>
+    </GestureDetector>
+  );
+}
+```
+
+### 4. Memoize Animated Components
+
+```typescript
+import { memo } from 'react';
+import Animated, { useAnimatedStyle, useDerivedValue } from 'react-native-reanimated';
+
+const InvoiceItem = memo(function InvoiceItem({ item, onPress }) {
+  // Move expensive computations to useDerivedValue
+  const displayName = useDerivedValue(() => {
+    return item.customerName.toUpperCase(); // Example computation
+  });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: item.checked ? 0.6 : 1,
+  }));
+
+  return (
+    <Animated.View style={animatedStyle}>
+      <Text>{displayName.value}</Text>
+    </Animated.View>
+  );
+});
+```
+
+### 5. Optimize Re-renders with Shared Values
+
+```typescript
+// ✅ GOOD: Animation state in shared value
+const isPressed = useSharedValue(false);
+const animatedStyle = useAnimatedStyle(() => ({
+  transform: [{ scale: withSpring(isPressed.value ? 0.95 : 1) }]
+}));
+
+// ❌ BAD: Animation state triggers React re-renders
+const [isPressed, setIsPressed] = useState(false);
+const scale = isPressed ? 0.95 : 1;
+```
+
+---
+
+## UX Enhancement Opportunities
+
+### 1. Smooth Modal Transitions
+
+Replace current `DiscountModal` with Reanimated-based implementation:
+
+```typescript
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  withTiming,
+  runOnJS,
+  Easing
+} from 'react-native-reanimated';
+
+export function DiscountModal({ visible, onClose, onApply }) {
+  const translateY = useSharedValue(SCREEN_DIMENSIONS.height);
+  const opacity = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
+
+  useEffect(() => {
+    if (visible) {
+      // Animate in
+      translateY.value = withSpring(0, {
+        damping: 20,
+        stiffness: 90,
+      });
+      opacity.value = withTiming(1, { duration: 200 });
+    } else {
+      // Animate out
+      translateY.value = withTiming(SCREEN_DIMENSIONS.height, {
+        duration: 200,
+        easing: Easing.in(Easing.ease),
+      });
+      opacity.value = withTiming(0, { duration: 200 });
+    }
+  }, [visible]);
+
+  return (
+    <Modal visible={visible} transparent animationType="none">
+      <Animated.View style={[styles.overlay, animatedStyle]}>
+        {/* Modal content */}
+      </Animated.View>
+    </Modal>
+  );
+}
+```
+
+**Benefits**:
+- UI thread execution (60fps guaranteed)
+- Smoother spring animations
+- No JS thread blocking
+
+### 2. Skeleton Loading Animations
+
+Replace `ActivityIndicator` with skeleton screens:
+
+```typescript
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
+
+function InvoiceListSkeleton() {
+  const shimmerAnim = useSharedValue(0);
+
+  useEffect(() => {
+    shimmerAnim.value = withRepeat(
+      withTiming(1, { duration: 1500 }),
+      -1, // Infinite
+      true // Reverse
+    );
+  }, []);
+
+  const shimmerStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: shimmerAnim.value * 200 }]
+  }));
+
+  return (
+    <View>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <View key={i} style={styles.skeletonItem}>
+          <Animated.View
+            style={[styles.skeletonShimmer, shimmerStyle]}
+          />
+        </View>
+      ))}
+    </View>
+  );
+}
+```
+
+### 3. Micro-interactions for Buttons
+
+```typescript
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
+
+function AnimatedButton({ onPress, children }) {
+  const scale = useSharedValue(1);
+  const pressed = useSharedValue(false);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+    opacity: pressed.value ? 0.7 : 1,
+  }));
+
+  const tap = Gesture.Tap()
+    .onBegin(() => {
+      'worklet';
+      pressed.value = true;
+      scale.value = withSpring(0.95, { damping: 15, stiffness: 400 });
+    })
+    .onFinalize(() => {
+      'worklet';
+      pressed.value = false;
+      scale.value = withSpring(1, { damping: 15, stiffness: 400 });
+    })
+    .onEnd(() => {
+      'worklet';
+      runOnJS(onPress)();
+    });
+
+  return (
+    <GestureDetector gesture={tap}>
+      <Animated.View style={animatedStyle}>
+        {children}
+      </Animated.View>
+    </GestureDetector>
+  );
+}
+```
+
+### 4. Enhanced Feedback with Haptics
+
+```typescript
+import * as Haptics from 'expo-haptics';
+
+const tap = Gesture.Tap()
+  .onBegin(() => {
+    'worklet';
+    pressed.value = true;
+    runOnJS(Haptics.impactAsync)();
+  })
+  .onEnd(() => {
+    'worklet';
+    runOnJS(Haptics.notificationAsync(
+      Haptics.NotificationFeedbackType.Success
+    ))();
+  });
+```
+
+### 5. Pull-to-Refresh with Custom Animation
+
+```typescript
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS
+} from 'react-native-reanimated';
+
+function RefreshableInvoiceList({ invoices, onRefresh }) {
+  const pullProgress = useSharedValue(0);
+  const isRefreshing = useSharedValue(false);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event) => {
+      'worklet';
+      // Track scroll position
+    },
+    onBeginDrag: () => {
+      'worklet';
+      // User started dragging
+    },
+    onEndDrag: (event) => {
+      'worklet';
+      if (pullProgress.value > 80) {
+        isRefreshing.value = true;
+        pullProgress.value = withSpring(0);
+        runOnJS(onRefresh)();
+      }
+    },
+  });
+
+  const rotateStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${pullProgress.value * 3.6}deg` }]
+  }));
+
+  return (
+    <Animated.ScrollView
+      onScroll={scrollHandler}
+      scrollEventThrottle={16}
+    >
+      {/* Refresh indicator */}
+      <Animated.View style={rotateStyle}>
+        <MaterialIcons name="refresh" />
+      </Animated.View>
+
+      {/* List content */}
+      <InvoiceList invoices={invoices} />
+    </Animated.ScrollView>
+  );
+}
+```
+
+---
+
+## Animation Smoothness Improvements
+
+### 1. Use Layout Animations for List Items
+
+```typescript
+import { FadeIn, FadeOut, Layout, SlideInRight } from 'react-native-reanimated';
+
+function AnimatedInvoiceItem({ item, index }) {
+  return (
+    <Animated.View
+      entering={SlideInRight.delay(index * 50).springify()}
+      exiting={FadeOut.duration(300)}
+      layout={Layout.springify()}
+    >
+      <InvoiceItemContent item={item} />
+    </Animated.View>
+  );
+}
+```
+
+**Benefits**:
+- Staggered entrance animations
+- Smooth exit animations
+- Automatic layout transitions
+
+### 2. Smooth Tab Transitions
+
+```typescript
+import { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
+
+function TabScreen() {
+  const tabBarPosition = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateX: tabBarPosition.value * -100 }]
+  }));
+
+  return (
+    <Animated.View style={[styles.container, animatedStyle]}>
+      {/* Screen content */}
+    </Animated.View>
+  );
+}
+```
+
+### 3. Page Transitions with Shared Elements
+
+```typescript
+// In invoice list
+<Animated.View
+  sharedTransitionTag={`invoice-${item.id}`}
+  entering={FadeIn}
+  exiting={FadeOut}
+>
+  <InvoiceItem item={item} />
+</Animated.View>
+
+// In invoice detail
+<Animated.View
+  sharedTransitionTag={`invoice-${invoiceId}`}
+  entering={ZoomIn}
+>
+  <InvoiceDetailContent />
+</Animated.View>
+```
+
+**Benefits**:
+- Hero animation between screens
+- Continuous visual flow
+- Professional polish
+
+### 4. Optimize Animated Properties
+
+**Preferred (non-layout, GPU-accelerated)**:
+- `transform` (translate, scale, rotate)
+- `opacity`
+- `backgroundColor` (with `ANDROID_SYNCHRONOUSLY_UPDATE_UI_PROPS`)
+
+**Avoid (layout-affecting, triggers layout recalculation)**:
+- `width`, `height`
+- `top`, `left`, `right`, `bottom`
+- `margin`, `padding`
+
+```typescript
+// ✅ GOOD: Use transform instead of top/left
+const animatedStyle = useAnimatedStyle(() => ({
+  transform: [{ translateY: scrollOffset.value }]
+}));
+
+// ❌ BAD: Layout property causes recalculation
+const animatedStyle = useAnimatedStyle(() => ({
+  top: scrollOffset.value
+}));
+```
+
+### 5. Use `useFrameCallback` for Continuous Animations
+
+```typescript
+import { useFrameCallback, useSharedValue } from 'react-native-reanimated';
+
+function AnimatedCounter() {
+  const progress = useSharedValue(0);
+
+  const frameCallback = useFrameCallback((frameInfo) => {
+    'worklet';
+    // Smooth increment based on delta time
+    progress.value = Math.min(progress.value + 0.016, 1);
+  });
+
+  useEffect(() => {
+    frameCallback.setActive(true);
+    return () => frameCallback.setActive(false);
+  }, []);
+
+  return <AnimatedText>{progress.value}</Animated.Text>;
+}
+```
+
+---
+
+## Implementation Roadmap
+
+### Phase 1: Foundation (Week 1)
+**Goal**: Enable Reanimated optimizations
+
+1. ✅ Add feature flags to `package.json`
+2. ✅ Run `npx expo prebuild --clean`
+3. � Test basic Reanimated components
+4. ✅ Verify 60fps on target devices
+
+**Deliverables**:
+- Enabled `ANDROID_SYNCHRONOUSLY_UPDATE_UI_PROPS` flag
+- Enabled `IOS_SYNCHRONOUSLY_UPDATE_UI_PROPS` flag
+- Performance baseline measurements
+
+### Phase 2: Component Upgrades (Week 2-3)
+**Goal**: Migrate to Reanimated API
+
+1. **Modal Animations**
+   - Rewrite `DiscountModal.tsx`
+   - Rewrite `PaymentModal.tsx`
+   - Test smooth enter/exit
+
+2. **Button Components**
+   - Create `AnimatedButton.tsx`
+   - Update all touchables
+   - Add haptic feedback
+
+3. **List Items**
+   - Add entering animations
+   - Add layout animations
+   - Implement swipe-to-delete
+
+**Deliverables**:
+- 3 Reanimated modal components
+- Reusable animated button component
+- Staggered list item animations
+
+### Phase 3: Advanced Features (Week 4)
+**Goal**: Polish and optimization
+
+1. **Shared Element Transitions**
+   - Invoice list → detail
+   - Contact list → detail
+   - Product list → detail
+
+2. **Skeleton Screens**
+   - Replace `ActivityIndicator`
+   - Shimmer effects
+   - Progressive loading
+
+3. **Pull-to-Refresh**
+   - Custom refresh indicators
+   - Spring animations
+   - Haptic feedback
+
+**Deliverables**:
+- 3 shared element transitions
+- 4 skeleton loading screens
+- Pull-to-refresh on all lists
+
+### Phase 4: Optimization & Testing (Week 5)
+**Goal**: Ensure 60fps across the app
+
+1. **Performance Profiling**
+   - Measure FPS with Flipper
+   - Identify bottlenecks
+   - Optimize critical path
+
+2. **Accessibility**
+   - Respect `ReduceMotion` setting
+   - Provide alternatives
+   - Test with VoiceOver
+
+3. **Edge Cases**
+   - Low-end devices
+   - Large lists (1000+ items)
+   - Rapid state changes
+
+**Deliverables**:
+- Performance report (target: 60fps on mid-range devices)
+- Accessibility compliance
+- Stress test results
+
+---
+
+## Best Practices Guidelines
+
+### 1. Shared Values vs State
+
+```typescript
+// ✅ Use shared values for animation state
+const isPressed = useSharedValue(false);
+
+// ❌ Don't use React state for animations
+const [isPressed, setIsPressed] = useState(false);
+```
+
+### 2. Access Shared Values Correctly
+
+```typescript
+// ✅ Read shared values in worklets
+const style = useAnimatedStyle(() => ({
+  opacity: isActive.value ? 1 : 0
+}));
+
+// ❌ Don't read in component body
+const opacity = isActive.value; // Blocks JS thread
+```
+
+### 3. Memoize Gesture Handlers
+
+```typescript
+// ✅ Memoize to prevent recreation
+const pan = useMemo(
+  () => Gesture.Pan().onChange((e) => { /* ... */ }),
+  []
+);
+
+// ❌ Don't recreate on every render
+const pan = Gesture.Pan().onChange((e) => { /* ... */ });
+```
+
+### 4. Use `runOnJS` for Non-Worklet Code
+
+```typescript
+const handleDelete = () => {
+  'worklet';
+
+  // ✅ Update shared values in worklet
+  scale.value = withSpring(0);
+
+  // ✅ Call React functions via runOnJS
+  runOnJS(() => {
+    onDelete(); // JS thread function
+    Haptics.notificationAsync();
+  })();
+};
+```
+
+### 5. Optimize Worklet Closures
+
+```typescript
+// ❌ BAD: Captures entire theme object
+const theme = { colors: { primary: '#13EC6A', secondary: '#3B82F6' } };
+
+function myWorklet() {
+  'worklet';
+  console.log(theme.colors.primary); // Captures entire theme
+}
+
+// ✅ GOOD: Destructure first
+const primaryColor = theme.colors.primary;
+
+function myWorklet() {
+  'worklet';
+  console.log(primaryColor); // Only captures what's needed
+}
+```
+
+### 6. Use Appropriate Easing Functions
+
+```typescript
+// UI interactions: Quick spring
+withSpring(0, { damping: 15, stiffness: 400 })
+
+// Continuous animations: Smooth timing
+withTiming(1, { duration: 300, easing: Easing.out(Easing.quad) })
+
+// Natural motion: Decay
+withDecay({ velocity: 1000, deceleration: 0.998 })
+```
+
+---
+
+## Performance Targets
+
+### Frame Rate
+- **Minimum**: 60fps on all screens
+- **Target**: 120fps on supported devices (ProMotion displays)
+- **Acceptable dips**: <5 frames below 60fps during complex animations
+
+### Animation Latency
+- **Touch feedback**: <16ms (1 frame)
+- **Modal transitions**: <300ms to full opacity
+- **List item animations**: <400ms staggered entrance
+
+### Memory
+- **Shared values**: <100 per screen
+- **Gesture handlers**: <5 active per screen
+- **Worklets**: Minimize closure captures
+
+---
+
+## Testing Checklist
+
+### Performance
+- [ ] 60fps on mid-range Android (e.g., Pixel 6)
+- [ ] 60fps on mid-range iOS (e.g., iPhone 13)
+- [ ] Smooth scrolling with 1000+ items
+- [ ] No frame drops during modal transitions
+
+### UX
+- [ ] All buttons have press feedback
+- [ ] Haptic feedback on key actions
+- [ ] Skeleton screens during loading
+- [ ] Smooth page transitions
+
+### Accessibility
+- [ ] Respects `ReduceMotion` setting
+- [ ] Provides alternative to gestures
+- [ ] Works with screen readers
+- [ ] Sufficient color contrast in animated states
+
+---
+
+## Code Examples Repository
+
+Create folder structure:
+```
+src/
+  animations/
+    index.ts
+    modals.ts
+    buttons.ts
+    lists.ts
+    transitions.ts
+  components/
+    animated/
+      AnimatedButton.tsx
+      AnimatedModal.tsx
+      SkeletonLoader.tsx
+      PullToRefresh.tsx
+```
+
+---
+
+## Success Metrics
+
+### Before Optimization (Estimated)
+- **Average FPS**: 45-55fps during scrolling
+- **Modal transition**: 200-300ms (janky)
+- **Button feedback**: 100-200ms (imperceptible)
+- **List item entrance**: None
+
+### After Optimization (Target)
+- **Average FPS**: 60fps (stable)
+- **Modal transition**: 200-300ms (smooth, on UI thread)
+- **Button feedback**: 16ms (immediate, with haptics)
+- **List item entrance**: 400ms (staggered, smooth)
+
+### User Impact
+- **Perceived performance**: +40%
+- **Touch responsiveness**: +60%
+- **Visual polish**: Professional grade
+- **Accessibility**: Improved (respects system settings)
+
+---
+
+## Troubleshooting
+
+### Issue: Animations not running on UI thread
+
+**Solution**: Ensure `'worklet';` directive is present:
+```typescript
+const myWorklet = () => {
+  'worklet'; // ← Required!
+  console.log('Running on UI thread');
+};
+```
+
+### Issue: Layout animations flicker
+
+**Solution**: Enable feature flags and use `Layout.springify()`:
+```typescript
+package.json: {
+  "reanimated": {
+    "staticFeatureFlags": {
+      "ANDROID_SYNCHRONOUSLY_UPDATE_UI_PROPS": true
+    }
+  }
+}
+```
+
+### Issue: Gesture handlers not responding
+
+**Solution**: Wrap root with `GestureHandlerRootView`:
+```typescript
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+export default function App() {
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* App content */}
+    </GestureHandlerRootView>
+  );
+}
+```
+
+---
+
+## Additional Resources
+
+- [React Native Reanimated Docs](https://docs.swmansion.com/react-native-reanimated/)
+- [React Native Gesture Handler Docs](https://docs.swmansion.com/react-native-gesture-handler/)
+- [Performance Guide](https://docs.swmansion.com/react-native-reanimated/docs/guides/performance)
+- [Expo Haptics API](https://docs.expo.dev/versions/latest/sdk/haptics/)
+
+---
+
+## Conclusion
+
+By implementing these optimizations, the Vishnu Billing application will achieve:
+1. **Professional-grade animations** running smoothly at 60fps
+2. **Responsive touch interactions** with immediate feedback
+3. **Improved accessibility** respecting user preferences
+4. **Better performance** on low-end devices
+5. **Maintainable codebase** following Reanimated best practices
+
+**Next Steps**: Begin with Phase 1 (Foundation) by enabling feature flags and measuring baseline performance.
