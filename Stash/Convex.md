@@ -39,3 +39,10 @@
 | Deterministic | Functions produce same output for same input (predictable) |
 | Idempotent    | Running multiple times doesn't cause side effects          |
 | Subscription  | Client listens to data changes automatically               |
+
+| Challenge | Why It's Hard |
+|-----------|---------------|
+| Remote persistence | Data lives somewhere you don't control |
+| Asynchronous APIs | Requires async/await, not synchronous access |
+| Shared ownership | Others can change data without your knowledge |
+| Staleness | Data becomes outdated automatically |
