@@ -46,3 +46,18 @@
 | Asynchronous APIs | Requires async/await, not synchronous access |
 | Shared ownership | Others can change data without your knowledge |
 | Staleness | Data becomes outdated automatically |
+
+| Pillar     | Physical Equivalent     | AWS Abstraction               | What It Does                 |
+| ---------- | ----------------------- | ----------------------------- | ---------------------------- |
+| Compute    | Servers/CPUs            | EC2, Lambda, ECS              | Processing power to run code |
+| Storage    | Hard drives/Tapes       | EBS, S3, EFS                  | Persist data durably         |
+| Networking | Routers/Switches/Cables | VPC, subnets, security groups | Connect resources securely   |
+
+
+| Service | Pillar     | Managed?            | Stateful?     | Serverless?        |
+| ------- | ---------- | ------------------- | ------------- | ------------------ |
+| EC2     | Compute    | No (you manage OS)  | Optional      | No                 |
+| Lambda  | Compute    | Yes (fully managed) | No            | Yes                |
+| S3      | Storage    | Yes                 | Yes (objects) | Yes                |
+| RDS     | Storage    | Yes (managed DB)    | Yes           | No (has instances) |
+| VPC     | Networking | Partial             | Yes (config)  | N/A                |
