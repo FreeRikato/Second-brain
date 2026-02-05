@@ -61,3 +61,12 @@
 | S3      | Storage    | Yes                 | Yes (objects) | Yes                |
 | RDS     | Storage    | Yes (managed DB)    | Yes           | No (has instances) |
 | VPC     | Networking | Partial             | Yes (config)  | N/A                |
+
+| Action | How To Do It |
+|--------|--------------|
+| Edit text | Double-click any text node in the DOM tree |
+| Edit attributes | Double-click attributes (e.g., class="btn") |
+| Delete element | Press Delete key or right-click → Delete |
+| Hide element | Press H key (toggles visibility) |
+| Reorder elements | Drag and drop in the DOM tree |
+| Copy element | Ctrl+C / Cmd+C |
