@@ -95,3 +95,25 @@
 | MMMLU                            | 91.1%    | 90.8%    | 89.5%      | 91.8%        | 89.6%         | —                     | —                     | —               |
 | Cybersecurity CTF                | —        | —        | —          | —            | —             | 77.6%                 | 67.4%                 | 67.7%           |
 | SWE-Lancer IC Diamond            | —        | —        | —          | —            | —             | 81.4%                 | 76.0%                 | 74.6%           |
+
+| Code | Meaning      | What It Tells You                    |
+| ---- | ------------ | ------------------------------------ |
+| 200  | OK           | ✅ Success! Resource loaded perfectly |
+| 304  | Not Modified | 🔄 Using cached version (faster!)    |
+| 404  | Not Found    | ❌ File doesn't exist on server       |
+| 500  | Server Error | 🔥 Something broke on the backend    |
+
+| Protocol | Version  | Why It Matters                                          |
+| -------- | -------- | ------------------------------------------------------- |
+| http/1.1 | HTTP 1.1 | Older, slower (one request at a time per connection)    |
+| h2       | HTTP/2   | Modern! Multiplexing = multiple requests simultaneously |
+| h3       | HTTP/3   | Cutting-edge! Uses QUIC for even faster performance     |
+
+| Type       | Description      | Examples             |
+| ---------- | ---------------- | -------------------- |
+| document   | Main HTML page   | index.html           |
+| script     | JavaScript files | app.js, bundle.js    |
+| stylesheet | CSS files        | style.css, theme.css |
+| xhr/fetch  | API calls        | api/data, users.json |
+| image      | Picture files    | logo.png, hero.jpg   |
+| font       | Web fonts        | font.woff2           |
