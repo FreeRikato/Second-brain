@@ -70,3 +70,28 @@
 | Hide element     | Press H key (toggles visibility)            |
 | Reorder elements | Drag and drop in the DOM tree               |
 | Copy element     | Ctrl+C / Cmd+C                              |
+
+
+| Benchmark                        | Opus 4.6 | Opus 4.5 | Sonnet 4.5 | Gemini 3 Pro | GPT-5.2 (all) | GPT-5.3-Codex (xhigh) | GPT-5.2-Codex (xhigh) | GPT-5.2 (xhigh) |
+| -------------------------------- | -------- | -------- | ---------- | ------------ | ------------- | --------------------- | --------------------- | --------------- |
+| Terminal-Bench 2.0               | 65.4%    | 59.8%    | 51.0%      | 56.2%        | 64.7%         | 77.3%                 | 64.0%                 | 62.2%           |
+| SWE-bench Verified               | 80.8%    | 80.9%    | 77.2%      | 76.2%        | 80.0%         | —                     | —                     | —               |
+| SWE-Bench Pro (Public)           | —        | —        | —          | —            | —             | 56.8%                 | 56.4%                 | 55.6%           |
+| OSWorld                          | 72.7%    | 66.3%    | 61.4%      | —            | —             | —                     | —                     | —               |
+| OSWorld-Verified                 | —        | —        | —          | —            | —             | 64.7%                 | 38.2%                 | 37.9%           |
+| τ2-bench Retail                  | 91.9%    | 88.9%    | 86.2%      | 85.3%        | 82.0%         | —                     | —                     | —               |
+| τ2-bench Telecom                 | 99.3%    | 98.2%    | 98.0%      | 98.0%        | 98.7%         | —                     | —                     | —               |
+| MCP Atlas                        | 59.5%    | 62.3%    | 43.8%      | 54.1%        | 60.6%         | —                     | —                     | —               |
+| BrowseComp                       | 84.0%    | 67.8%    | 43.9%      | 59.2%        | 77.9%         | —                     | —                     | —               |
+| Humanity's Last Exam (w/o tools) | 40.0%    | 30.8%    | 17.7%      | 37.5%        | 36.6%         | —                     | —                     | —               |
+| Humanity's Last Exam (w/ tools)  | 53.1%    | 43.4%    | 33.6%      | 45.8%        | 50.0%         | —                     | —                     | —               |
+| Finance Agent                    | 60.7%    | 55.9%    | 54.2%      | 44.1%        | 56.6%         | —                     | —                     | —               |
+| GDPVal-AA Elo                    | 1606     | 1416     | 1277       | 1195         | 1462          | —                     | —                     | —               |
+| GDPval (wins or ties)            | —        | —        | —          | —            | —             | 70.9%                 | —                     | 70.9%           |
+| ARC AGI 2                        | 68.8%    | 37.6%    | 13.6%      | 45.1%        | 54.2%         | —                     | —                     | —               |
+| GPQA Diamond                     | 91.3%    | 87.0%    | 83.4%      | 91.9%        | 93.2%         | —                     | —                     | —               |
+| MMMU Pro (w/o tools)             | 73.9%    | 70.6%    | 63.4%      | 81.0%        | 79.5%         | —                     | —                     | —               |
+| MMMU Pro (w/ tools)              | 77.3%    | 73.9%    | 68.9%      | —            | 80.4%         | —                     | —                     | —               |
+| MMMLU                            | 91.1%    | 90.8%    | 89.5%      | 91.8%        | 89.6%         | —                     | —                     | —               |
+| Cybersecurity CTF                | —        | —        | —          | —            | —             | 77.6%                 | 67.4%                 | 67.7%           |
+| SWE-Lancer IC Diamond            | —        | —        | —          | —            | —             | 81.4%                 | 76.0%                 | 74.6%           |
