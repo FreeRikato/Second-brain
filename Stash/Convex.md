@@ -117,3 +117,10 @@
 | xhr/fetch  | API calls        | api/data, users.json |
 | image      | Picture files    | logo.png, hero.jpg   |
 | font       | Web fonts        | font.woff2           |
+
+| Benefit | How It's Achieved |
+|---------|------------------|
+| High Availability | Deploy across multiple AZs—if one fails, others continue |
+| Fault Tolerance | Physical separation of AZs reduces disaster risk |
+| Low Latency | Edge Locations serve cached content near users |
+| Compliance | Choose Regions that meet data residency requirements |
