@@ -133,3 +133,11 @@
 | Secure by Default | New users have ZERO permissions |
 | Root Account | Created with your AWS account; has unrestricted access |
 | STS | Security Token Service issues temporary credentials |
+
+
+| User                                               | Role                                  |
+| -------------------------------------------------- | ------------------------------------- |
+| Has permanent credentials (password + access keys) | Has NO credentials                    |
+| Represents a person                                | Represents a "situation" or "context" |
+| Long-term identity                                 | Temporary identity                    |
+| Like an employee badge                             | Like a visitor pass                   |
