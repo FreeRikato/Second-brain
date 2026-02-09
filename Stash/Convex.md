@@ -124,3 +124,12 @@
 | Fault Tolerance | Physical separation of AZs reduces disaster risk |
 | Low Latency | Edge Locations serve cached content near users |
 | Compliance | Choose Regions that meet data residency requirements |
+
+
+| Feature | Description |
+|---------|-------------|
+| Global Service | IAM is universal—not tied to any Region |
+| Eventually Consistent | Changes replicate across data centers worldwide |
+| Secure by Default | New users have ZERO permissions |
+| Root Account | Created with your AWS account; has unrestricted access |
+| STS | Security Token Service issues temporary credentials |
