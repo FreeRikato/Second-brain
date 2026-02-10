@@ -141,3 +141,13 @@
 | Represents a person                                | Represents a "situation" or "context" |
 | Long-term identity                                 | Temporary identity                    |
 | Like an employee badge                             | Like a visitor pass                   |
+
+
+| Method | Credentials Needed | Best For | Security Level |
+|--------|-------------------|----------|----------------|
+| Management Console | Username + Password + MFA | Humans learning/managing AWS | High (with MFA) |
+| AWS CLI | Access Keys + MFA (optional) | Scripts, automation, DevOps | Medium-High |
+| AWS SDK | Access Keys or IAM Roles | Applications, microservices | High (with roles) |
+| AWS API | Access Keys | Custom integrations | Medium |
+| IAM Roles | Temporary credentials | EC2, Lambda, containers | Highest |
+| Federation | External identity provider | Enterprise SSO, mobile apps | High |
