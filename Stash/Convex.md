@@ -151,3 +151,11 @@
 | AWS API            | Access Keys                  | Custom integrations          | Medium            |
 | IAM Roles          | Temporary credentials        | EC2, Lambda, containers      | Highest           |
 | Federation         | External identity provider   | Enterprise SSO, mobile apps  | High              |
+
+| Family                | Best For                                                 |
+| --------------------- | -------------------------------------------------------- |
+| General Purpose       | Balanced compute, memory, networking (web servers, apps) |
+| Compute Optimized     | Compute-intensive workloads (batch processing, HPC)      |
+| Memory Optimized      | Large datasets in memory (databases, caching)            |
+| Accelerated Computing | GPUs for graphics, ML, floating-point math               |
+| Storage Optimized     | High I/O for data warehouses, distributed file systems   |
