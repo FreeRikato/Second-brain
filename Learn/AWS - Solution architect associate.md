@@ -147,18 +147,12 @@
 
 > Launch NLB => Create multiple EC2 instances with user script -> Go to Load balancers under Load balancing -> Create NLB: Internet facing, IPv4, Select all AZ in Network mapping where each IPv4 address is fixed/static assigned by AWS -> Create security group allowing traffic in port 80 -> Create target group (configure group name, protocol, port and health check) -> Configure security group of the instances to link port 80 with the security group of the NLB
 
-> Sticky sessions => Go to target group -> Edit attributes -> Turn on stickiness -> In case of Application-based cookie then configure cookie name
-
-> Cross zone load balancing => Go to Load balancers -> Select a load balancer and attributes -> Edit to toggle it (Toggle CZLB for specific target groups if necessary)
-
-> SSL/TLS Cert for Load balancers => Select specific load balancer -> Add listener -> Configure with port 443 for HTTPS protocol with default action of forward to specific target group
-
 2. What is a downstream instance and is there an upstream instance? What is the role of elastic load balancer here? How does it provide SSL termination for website and enforce stickiness with cookies?
 3. Compare own load balancer vs Elastic load balancer and internal (private) vs external (public) load balancers. Brief on the relation among elastic, application, network and gateway load balancer.
 4. What is a health check? How is this crucial to availability? Is it done across instances or target groups? How is it different for each type of load balancers?
 5. Draw a decision diagram to choose between different types of load balancers in AWS.
 6. How do we configure the ip range in security group of an instance with load balancer? (link SG of LB -> SG of EC2)
-7. What layer does ALB, NLB and GLWB operate at? In ALB, Do we load balance multiple applications in the same or across machines or across target groups? (Target groups, containers)
+7. What layer does ALB, NLB and GLWB operate at? In ALB, Do we load balance multiple applications in the same or across machines or across target groups? (Target groups, containers). Do elastic load balancers provide static - ipv4, ipv6 or dns name?
 8. ALB supports redirect from HTTP to HTTPS. Support the statement
 9. What are the options to route routing in ALB? Why is it great for micro services & container based application? (Port mapping)? What are the action types on top of route routing?
 10. What are target groups? Can public ip addresses be in a target group? List out the target groups for each type of load balancer? Do target groups have security group?
@@ -187,8 +181,15 @@
 31. Do we specify the duration for both type of cookies in the stickiness section of aws console and if yes, how are they different in the first place?
 32. What is the need for cross zone balancing? Best vs Worst case scenario for CZLB.
 33. What is the nature of CZLB in different types of load balancers by default? Does it cost for inter AZ data?
+34. Is it possible to attach elastic IP to ALB?
 
 ### SSL/TLS + ASG
+
+> Sticky sessions => Go to target group -> Edit attributes -> Turn on stickiness -> In case of Application-based cookie then configure cookie name
+
+> Cross zone load balancing => Go to Load balancers -> Select a load balancer and attributes -> Edit to toggle it (Toggle CZLB for specific target groups if necessary)
+
+> SSL/TLS Cert for Load balancers => Select specific load balancer -> Add listener -> Configure with port 443 for HTTPS protocol with default action of forward to specific target group
 
 1. Why to go for SSL certificate? (in-flight encryption)
 2. Who is responsible to encrypt and decrypt the data?
@@ -204,11 +205,44 @@
 12. How to support compatibilit for older versions of SSL or TLS? (Secure listener settings)
 13. Is connection draining useful? How it is related to deregistration delay?
 14. What happens to the request that are in process inside a deregistering instance if it the instance is stopped suddenly before the deregistration delay period?
+15. How to configure HTTPS for multiple hostnames by configuring ALB?
 
 ### ASG
+
+> Auto scaling groups => Go into ASG under auto scaling -> Create a launch template, choose launch options, Other service integration, Configure group size & scaling, add notifications and add tags
+
+> Auto scaling policies => Inside the auto scaling group, go into Automatic scaling -> Select the type of strategy and create one
 
 1. What is Auto scaling group? Does it scale vertical or horizontal? Difference between scale out and scale in
 2. Can ASG automatically register new instances to a load balancer? How about recreation of EC2 instance if an old one is unhealthy?
 3. How much does ASG cost?
-4. Relate minimum, desired and maximum capacity, how it affects the scaling?
-5.  
+4. Relate minimum, initial, desired and maximum capacity, how it affects the scaling?
+5. What is the need of load balancer if there is ASG already which would take care of scaling? How to combine and use load balancer with ASG with health checks and scaling?
+6. What are the main attributes to a launch template for ASG and can it have instances with heterogeneous attributes?
+7. Why to have EC2 User data in launch template?
+8. How to use cloudwatch alarm and scaling policies to go hand in hand for better traffic handling?
+9. Does the scaling policies apply only for scale out or also supports scale in?
+10. Can ASG work across AZs i.e. Create instances from different AZs? How to configure subnets for such launch templates?
+11. If we attach a load balancer on top of auto scaling group and select a target group, will the ASG scale in and out instances inside the target group?
+12. On what basis does the ASG scale in or out by default without any custom scaling policies?
+13. What security group or EC2 user data can make the instance unhealthy? Will the ASG endlessly launch instances if the instance it launch is unhealthy due to an issue?
+14. What are the different strategies under scaling policies? Draw a decision diagram to choose between these strategies.
+15. List out some metrics to watch out for to scale with ASG.
+16. How does ready-to-use AMI reduce configuration time for faster request serving and cooldown period reduction?
+17. If a scale out in target tracking policy is determined with cloudwatch, does it scale in on its own? For example i have set to scale out at 40% CPU usage and it creates an instance what if the CPU usage goes down? How does it determine when to scale in?
+18. Does Network load balancer support health checks for both HTTP and TCP?
+
+## 9. AWS Fundamentals: RDS + Aurora + ElastiCache
+
+### RDS
+
+1. Differentiate RDS, DynamoDB and Aurora
+2. If it supports multiple database engines, does it support the respective query language for the engines as well?
+3. Compare RDS vs deploying db on EC2
+4. What is provisioning and what does it mean for automated provisioning + OS patching in RDS?
+5. Differentiate point in time restore with snapshots
+
+### Aurora
+
+### ElastiCache
+
