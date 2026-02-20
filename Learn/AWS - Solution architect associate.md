@@ -258,6 +258,8 @@ Create RDS => Under Aurora and RDS -> Go to databases -> Create database -> Sele
 18. How to completely delete a RDS DB?
 19. Is it possible to have control of the underlying OS and database customization of an RDS? What is an SSM Session Manager and how is it different from SSH?
 20. Why is it necessary to deactivate automation mode before customization on the DB? Which engines support such customization?
+21. Can multi-az setup help retrieval of recently changed data across read replicas bypassing asynchronous replication?
+22. Which requires SQL connection string change for RDS -> Multi-AZ or Read replicas. Which one has DNS name for each endpoint and why not the other one have?
 
 ### Aurora
 
@@ -297,6 +299,11 @@ Create Aurora DB => RDS > Create database -> Aurora type with psql or mysql engi
 32. How is RDS proxy serverless? Does it support multi-AZ or multi-region? 
 33. If RDS proxy is never publicly accessible, what about RDS/Aurora? How to access them them? Why such a setup?
 34. What is connection pooling? How can it be exhausted? What are open connections and why connections timeout?
+35. Compare disaster recovery across regions among -> RDS read replicas/multi-az and Aurora read replicas/global database
+36. Compare IAM Database authentication and default IAM users access to RDS db. Which RDS DB doesn't support IAM database auth?
+37. How many read replicas do RDS support? (15) How about one RDS cluster? How many Aurora read replicas can be in a single Aurora DB cluster? (15)
+38. How to store long-term backups for Aurora DB for DR and Audit? (on-demand backups)
+
 
 ### ElastiCache
 
@@ -318,4 +325,15 @@ Redis Elasticache => Under Elasticache, get started ->
 14. What's the purpose of primary and reader endpoint in elasticache?
 15. Does elasticache support IAM authentication? What is an AWS API-level security?
 16. Compare these redis auth options - 1. Password -> security group -> SSL in-flight encryption 2. IAM Authentication? What auth does memcached support? (SASL)
-17. 
+17. What are the patterns in elasticache?
+18. For scaling reads, which one is not useful - RDS Multi-AZ, RDS Read Replicas and Elasticache cluster
+
+## Route 53
+
+### Overview
+
+
+### Routing Policy
+
+
+### Advanced
