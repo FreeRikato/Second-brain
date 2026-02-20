@@ -236,13 +236,86 @@
 
 ### RDS
 
+Create RDS => Under Aurora and RDS -> Go to databases -> Create database -> Select template and deployment options
+
 1. Differentiate RDS, DynamoDB and Aurora
 2. If it supports multiple database engines, does it support the respective query language for the engines as well?
 3. Compare RDS vs deploying db on EC2
-4. What is provisioning and what does it mean for automated provisioning + OS patching in RDS?
+4. What is provisioning and what does it mean for automated provisioning + OS patching + Maintenance window for upgrades in RDS?
 5. Differentiate point in time restore with snapshots
+6. What is read replicas? What is its purpose? (scale reads)
+7. For a multi AZ setup, are multiple instances connected to one RDS or a single instance is connected to distributed RDS across different AZs? What about its backing with an EBS and how it gets affected with multi AZ setup
+8. How to support unpredictable workloads with RDS? What happens if it crosses maximum storage threshold? Are both scale-in and scale-out policies determined for auto-scaling? How about support for all RDS database engines?
+9. Are read replicas tied to an AZ or a region? Won't synchronous replication of DB consume time? What happens if the application reads from Read Replica before data replication and why is it called eventually consistent?
+10. What is the benefit of promoting replicas to be its own DB and for an application the connection string is mostly tied to one fixed DB, how to leverage all read replicas in RDS cluster?
+11. Brief on the network cost for read replicas. (no pay for same region)
+12. For a multi-az setup, is the replication operation -> Sync or Async? Will the new write to master DB replicated to the replicated DB for multi-AZ and read replica setups?
+13. How many DNS name do we have in a multi-az setup compared to read replica setup? What is it used for?
+14. What is the secondary db called in multi-az and read replica setups? In case of a problem with master what happens to these secondary dbs? List out the Failover scenarios in both setups.
+15. Can the read replicas converted to multi AZ setup for DR? How to convert RDS from single AZ to multi AZ? Do we need to stop the DB for these conversions? How AWS does these conversions behind the scenes?
+16. Differentiate standby with readable standby? Why does RDS need Storage of its own? For a no preference AZ, where will the RDS be created?
+17. Why to have Multi-AZ deployment for a read replica?
+18. How to completely delete a RDS DB?
+19. Is it possible to have control of the underlying OS and database customization of an RDS? What is an SSM Session Manager and how is it different from SSH?
+20. Why is it necessary to deactivate automation mode before customization on the DB? Which engines support such customization?
 
 ### Aurora
 
+Create Aurora DB => RDS > Create database -> Aurora type with psql or mysql engine -> 
+
+1. Why do we have Aurora in the first place if Postgres and MySQL engines already exist? is Aurora DB - Postgres or MySQL?
+2. Compare the scaling, replica, availability and Failover of Aurora storage compare to other. If it is better then why does it cost more than RDS?
+3. Does Aurora always have 6 copies of data across 3 AZ (4 for writes and 3 for reads)
+4. Explain the self healing, storage stripping and auto expanding feature of aurora db.
+5. If one aurora instance takes writes then how are other copies synced? Which one has cross region replication - RDS or Aurora?
+6. How is the conversion of read replica to master in Aurora different from RDS?
+7. What are writer and reader endpoint and what is its role? Do we need the application to connect to the read replicas? If yes, why cause connecting to master should be enought right? Is reader endpoint connected to master along with the read replicas? What happens to the endpoint in case of a failover?
+8. Pick out features avaialable in Aurora vs RDS from -> Automatic fail-over, Backup & Recovery, Isolation & Security, Industry compliance, Push-button scaling, Automated patching with zero downtime, Advance monitoring, Routine Maintenance and Backtrack
+9. Differentiate Backtrack from point in time and Auto scaling from Push-button scaling
+10. What are these features: global database, parallel query and local write forwarding in Aurora
+11. Why do we configure instance for Aurora? won't AWS do it automatically? Why do we get the option of serverless, r and t classes
+12. Why do we have multiple endpoints in Aurora for writer and reader instance? Why isn't there desired capacity in scaling policy of Aurora?
+13. How to delete the aurora db? Is there any particular sequence of steps to it?
+14. Are all replicas in shared storage volume for - RDS and Aurora? What is the connection between -> Aurora DB, Aurora cluster, Aurora global database and Aurora cross region read replicas?
+15. Is reader endpoint a load balancer for multiple read replicas in Aurora? Can read replicas be of different sizes? If so what is its purpose? How is custom endpoint different from reader endpoint?
+16. What is database instantiation? How is it done in Aurora serverless?
+17. Does proxy fleet in Aurora serverless have cold starts?
+18. How is Aurora Global Datbase (AGD) different from Aurora Cross Region Read Replicas? What is recovery time objective and what is its place in AGD?
+19. Compare cross region replication of RDS, Aurora DB and AGD.
+20. How to enable ML-based predictions via SQL in applications (Aurora ML -> SageMaker and Comprehend)
+21. Lets say a company uses microsoft SQL server and wish to migrate to Aurora postgresql, how is this possible with little to no code changes. If the translation T-SQL queries into Aurora postgres, does it translate to psql syntax and what is the role of AWS SCT & DMS?
+22. When does the automated backups run in RDS and Aurora? Can it be disable in both of them? Is it full backup or semi? What about the transaction log backups? How long is the point in time backup supported?
+23. Which backup has no limit to retention - Automated or Manual? How is DB snapshots different from Point in time?
+24. Does it cost even after stopping RDS or Aurora DB? What about ELBs? any way to avoid this cost?
+25. Does RDS/Autora backup/snapshot restoration create a new database or modify an existing replica?
+26. How to migrate to MySQL RDS/Aurora cluster from on-premises database? (S3, Percona XtraBackup)
+27. What is the copy-on-write protocol and how is it useful for database cloning? Which one supports this - RDS/Aurora?
+28. Differentiate at-rest vs in-flight encryption. How to enrypt an un-encrypted database and is it possible to encrypt its existing read replicas since an unencrypted master can only have unencrytped read replicas? Why to use AWS TLS root certiciate especially on client-side for in-flight encryption?
+29. Do RDS and Aurora support SSH? (except RDS Custom)
+30. How to get a longer retention of the Audit logs? (sent to cloudwatch logs)
+31. How is RDS proxy different from proxy fleet and reader endpoint in Aurora, Can't we use a ELB here? How does it reduce failover time in RDS/Aurora by 66%
+32. How is RDS proxy serverless? Does it support multi-AZ or multi-region? 
+33. If RDS proxy is never publicly accessible, what about RDS/Aurora? How to access them them? Why such a setup?
+34. What is connection pooling? How can it be exhausted? What are open connections and why connections timeout?
+
 ### ElastiCache
 
+Redis Elasticache => Under Elasticache, get started -> 
+
+1. What is the difference between valkey, redis and memcached? I don't get the idea of a in-memory databases in cloud, cache is used for frequently accessed data and use key to return value which is much faster than database returns, What if the in-memory database is present at a place farther from the application than a database? What if we use sqlite embededded with the application and use it for caching rather than cloud in-memory database? Should the cloud in-memory database i.e. ElastiCache present near the database or application? Compare indexed database returns with in-memory database cache-hit returns if both db and in-memory db are present in the same location.
+2. How does elasticache make the application stateless? What is common to RDS and Elasticache?
+3. How to decide if a data should be indexed/cached?
+4. Which one is better for user session store for one vs multple instances of an application -> elasticache, cookies, RDS, refresh token or session token
+5. How to make data durable in redis elasticache? (AOF peristance) What is the need for sorted sets in redis elasticache?
+6. Why doesn't memcached elasticache support replication unlike memcached? How does memcached support sharding and compare the data persistence + thread architecture of redis vs memcached elasticache?
+7. Which one supports serverless - redis vs memcached elasticache? How and Why it does?
+8. What is a node-based cluster deployment? What is its relation to the redis & memcached elasticache? What is a cluster cache and cluster mode?
+9. Are the cluster cache and RDS/Aurora cluster in same AZ synced, what if they don't exist in same AZ?
+10. Differentiate between - Cluster, Shard, Node group, Serverless in caching
+11. How to plan and use redis/memcached Elasticache with RDS/Aurora (including proxy) effectively for a single vs multi-instance application? List out different scenarios + configuration like high availability, low cost, high performance and more such metrics
+12. Why to have an on premise elasticache? How to do it?
+13. Does elasticache support cross-region?
+14. What's the purpose of primary and reader endpoint in elasticache?
+15. Does elasticache support IAM authentication? What is an AWS API-level security?
+16. Compare these redis auth options - 1. Password -> security group -> SSL in-flight encryption 2. IAM Authentication? What auth does memcached support? (SASL)
+17. 
