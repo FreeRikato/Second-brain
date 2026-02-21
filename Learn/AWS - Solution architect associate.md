@@ -332,8 +332,64 @@ Redis Elasticache => Under Elasticache, get started ->
 
 ### Overview
 
+> Register domain => Under domains in Route 53 -> Registered domains
+> Create a record => Go into a hosted zone -> Create record with name, type, TTL and value
+> Create an alias with non-root domain for ALB => Enter record name -> Create record with A type -> Select alias -> Select the specific ALB
+> Create an alias with root domain for ALB => Leave record name empty -> A record type -> Toggle Alias and select specific ALB
+
+1. Why do we need DNS? How is DNS naming structured in hierarchial way. What is Route 53? Differentiate  between Domain registrar, service or server?
+2. Relate the terms: Domain registrar, DNS Recods, DNS resolvers, Zone file, Name server, Top level domain, Second level domain, Full qualified domain and Domain. Where does WWW comes under?
+3. Differentiate second level domain vs sub domain.
+4. How DNS Works? (Browser -> Local -> Root -> TLD -> SLD -> Local DNS server -> Browser. Where does Hosted zone come under?
+5. Does DNS mean domain name server/system?
+6. What is a hosted zone and how is it related Route 53? Differentiate between public and private hosted zones.
+7. Can Route 53 run with 100% availabilitty? How? (SLA)
+8. Why is it called 53? (reference to tradtional DNS servers)
+9. What do the records in route 53 do under the hood? (route traffic for domain) What do each record contain and tell its purpose? (Domain, Record type, Value, Routing policy, TTL)
+10. What do each record types map to? What should the target domain's record type be for CNAME? What is a zone apex and why is it not possible to create a CNAME record for the top node of a DNS namespace (like example.com but possible for www.example.com)?
+11. Does it cost to create any record types in Route 53? What is the difference between registering a record, creating a record, buying a dns, buying an URL, mapping dns and register domain?
+12. What is the need to have privacy protection for the registering domain.
+13. When i register a domain in Route 53 -> does it mean i bought a hosted zone? Why is there SOA and NS record already present inside the hosted zone when i register a domain? To create more records, should i use the existing hosted zone?
+14. While creating an application load balancer, what port should it allow inbound and outbound traffic? Why is the listener set to port 80 and also set port of the target group to 80? Do all ec2 instances and load balancers have dns name on their own? Can we have instances from different AZ and regions in one target group? List out AWS resources that expose an AWS hostname, out of which should be mapped with CNAME record type to a new hostname with Route 53
+15. What is the use of a TTL? What strategy to use in case of ip, dns or record change? Why doesn't alias records don't have mandatory TTL?
+16. How is alias different from CNAME? Explain more about top node, root domain and non root domain with example. Can we have mydomain.com pointing to, as an alias, to an alias or aws resource?
+17. Is Alias a record type? What record types are free of charge, automatic resource's ip change recognition and support native health check? How is alias an extension to DNS functionality?
+18. Alias record is always of type A/AAAA for AWS resources and CNAME for other hostnames. Is it true? Why can't we set TTL for Alias records?
+19. Is it possible to set Alias record for an EC2 DNS name? List out the alias records targets and why to have alias for them?
+20. Compare CNAME vs alias record for an ALB. Which one is AWS Native and support target health evaluation? How is alias record free of cost?
+
 
 ### Routing Policy
 
+> Health check => Under dashboard, go to health checks -> 
+
+1. Explain the role of a routing policy? How is it different from load balancer if it determines how Route 53 responds to DNS queries? Can we use Route 53 for cross region load balancing?
+2. Draw a decision diagram to choose between different routing policies.
+3. Is it possible to have multiple values in same record that to from different regions? If yes, why and which is picked and sent to the client? What if each ip values point to different aws resources?
+4. If alias is enabled, is it possible to have multiple AWS resource values?
+5. Which routing policy support health checks? What is checked?
+6. Can the sum of weights of resources be random in weighted routing policy? How is traffic handled? Is it possible to have different aws resources here having unique record names? Why do we need record id?
+7. While having multiple values in simple policy it stacks up into one record but for other policies there is a record for each value. Is it true
+8. How does AWS calculate the latency and redirect to resource in a latency-based routing policy? Is it done on-the-fly? Is the failover capability of route 53 same as ELB?
+9. What is the strategy to configure EC2, ELB, EBS, EFS and Elasticache with Route 53 for least latency + low cost?
+10. While creating a record with latency-based policy, the value is set to ip address of an an aws resource in one region and region is set different from the aws region? Can't AWS detect the region of value (ip) entered?
+11. With dig command, do we get all the values set for the created record in all policies?
+12. Will vpn, clear TTL for DNS cache and send the traffic to a resource with less latency? How?
+13. Do both public and private resources support health checks in Route 53? Why and why not?
+14. What is the hierarchy to deploy a high availability cross region resource setup with custom domain?
+15. What are the different types of health checks? How to choose one for different scenarios? Can a health check be on top of another health check?
+16. List out the AWS services that are integrated with CW metrics?
+17. How many health checkers are currently present? (15) Do we have a health checker for each region? What does it mean to have a threshold for the health checkers? Do each health checkers evaluate an endpoint, how does it check the health of an endpoint in the first place and what exactly is the metrc to deem an endpoint to be healthy/unhealthy?
+18. Is it possible to configure health check condition to pass or fail? Is it possible to setup pass/fail based on text from first X bytes of the response? What is the need for such a setup and value of this X?
+19. By default, the health checkers ports are allowed in the resource when health check is enabled. If not, how to allow the resource to allow health checker port. Is it done by firewall or router.
+20. If AWS has health checkers all over the globe then what does configuring health checks in Route 53 mean? Does enabling health checks individually for each values (ip) allow the AWS health checkers to check and take care of the failovers?
+21. What is the need for a calculated health checks where a health checks combines the results of multiple health checks into a single health check. What operation does it use to combine the results - OR, AND, or NOT? Who monitors the health checks - Route 53, Health checkers or the parent health check? How many child health checks can be monitored at once and Is it possible to specify how many health checks need to pass for the parent to pass?
+22. Why is it not possible for route 53 to access private endpoints (private VPC / on-premises resources)? (health checkers are present outside of VPC). Is there a workaround for this? (Cloudwatch alarm has access to private subnet of instances and health check can check the alarm itself based on cloudwatch metric)
+23. Doesn't enabling health checks for the records create health check? Why do we create and manually configure endpoints to the health checks?
+24. Why do applications have a /health endpoint in them? If we provide the IP address already to monitor the endpoint, what is the necessity to proivde a host name and what if the host name points to a wrong resource ip address? In case of a string matching, Give an example of what could be checked and in what scenario this is helpful.
+25. Where would "invert health check status" be helpful? When would we want to customize health checker regions?
+26. How to troubleshoot in a case where the instance is working fine but the health checker shows it to be unhealthy? (check the security group of the instances). When the health check is created for an instance, do multiple health checkers all over the globe check them constantly in an interval?
+27. 
 
 ### Advanced
+
