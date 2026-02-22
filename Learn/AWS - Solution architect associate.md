@@ -389,7 +389,83 @@ Redis Elasticache => Under Elasticache, get started ->
 24. Why do applications have a /health endpoint in them? If we provide the IP address already to monitor the endpoint, what is the necessity to proivde a host name and what if the host name points to a wrong resource ip address? In case of a string matching, Give an example of what could be checked and in what scenario this is helpful.
 25. Where would "invert health check status" be helpful? When would we want to customize health checker regions?
 26. How to troubleshoot in a case where the instance is working fine but the health checker shows it to be unhealthy? (check the security group of the instances). When the health check is created for an instance, do multiple health checkers all over the globe check them constantly in an interval?
-27. 
+27. Lets say there is a primary instance and a secondary instance (DR purpose), we enabled health check for the primary instance, what will happen if the health check fails? Will there be a failover to the secondary instance? Should we enable health check in the secondary instance as well for the failover to happen? How this scenario will be handled for different routing policies?
+28. Won't the routing policies have failover in-built with the health checks? What is the need for a failover routing policy? How many primary and secondary failover types be present?
+29. How is Geolocation routing policy different from latency if the latter routes after determining traffic to the regions? Is it customizable to route user based on the location or else is it fixed? Why to create a "default" record? (unmatched location to be directed to that ip address)
+30. How is geoproximity routing policy different from geolocation? Give appropriate use cases for this policy. What is the Route 53 traffic flow and what is its role in this geoproximity routing policy?
+31. What is CIDR and CIDR blocks? What is the need for a IP-based routing?
+32. How is multi-value routing policy different from ELB if it routes traffic to multiple resources? How can it be associated with health check and how many healthy records are returned for each? How can it be said to be client side load balancing? How is this different from simple routing policy? If there is no health check for a multi-value policy record then is it equivalent to a simple routing policy? How many values will be returned with dig command for this record?
 
 ### Advanced
 
+1. How are these related -> Domain, Domain registrar, DNS service, EDNS and DNS Records
+2. Give me an example of registering domain from 3rd party domain registrar and using Route 53 for DNS service.
+3. What are the NS Records? What purpose do they serve with Route 53 vs 3rd party registrar as registrar? What happens if we match the NS records of the 3rd party registrar with route 53 to use route 53 for DNS service?
+4. How to resolve DNS queries between VPC and on premise network where the network can be VPC itself/Peered VPC and On-premises network (connected through direct connect or AWS VPN)
+5. Connect these -> Public name server, region, route 53 resolver, resolver endpoint, VPC, private hosted zone and an EC2 instance
+6. How to connect on-premise data center with AWS? (VPN or DX)
+7. What is the role of inbound and outbound endpoint in resolver endpoints?
+8. How do we setup on-premises data center with private DNS resolver to AWS and use resolver inbound endpoint to route with Route 53 resolver?
+
+## Classic Solutions Architecture Discussion
+
+### WhatIsTheTime.com
+
+1. Is it possible to vertically scale with zero downtime nor ip address change?
+2. Can't we have a single elastic IP attached to multiple instances?
+3. What happens if an EC2 instance is restarted or its ip changed whose IP was resolved with a dns record by route 53? Does the route 53 take care of failover? Route 53 eliminates the need for an elastic ip, is it true?
+4. Compare the health checks in ELB vs Route 53.
+5. How do we point the ELB to an auto scaling group? Does the auto scaling group have an ip address on its own? What is present inside an auto scaling group - one or more instances? target groups? heterogenous aws resources?
+6. If auto scaling group takes care of horizontal scaling and failovers what is need for a health check in ELB that load balances across the auto scaling group?
+7. Is it possible to have auto scaling groups or ELB across AZs and Regions? If it is possible to have auto scaling groups across different AZs then how do we define min, desired and max capacity?
+8. When to go for public vc private ip ec2 instance?
+
+### MyClother.com
+
+1. Lets say the state of a data has to be persisted in a setup with Multi-AZ ASG and Multi-AZ, which is a better approach -> sticky session or web cookies or elasticache? Compare each approach with pros and cons. If sticky session and web cookies are stateless approach, what about elasticache, dynamodb or RDS?
+2. How to design security groups for restricting traffic to elasticache from ec2, rds from ec2, ec2 from elb? Is it enough to edit just the inbound rules or will editing outbound rules make the application more secure?
+
+### MyWordPress.com
+
+1. Is it a good practice to store uploaded images in EBS attached to an instance? What are the issues? (Distribution across instances) How to address it? (EFS with ENI)
+2. For multi-az and read replicas, which one to pick auroa db or rds? Why?
+
+### Faster full stack deployments
+
+1. Golden AMI > Pre install applications, OS dependencies and launch EC2 instance from this AMI
+2. Bootstrapping user data > Dynamic configuration, use user data scripts
+3. How to use a hybrid of this golden AMI and user data (Elastic beanstalk)
+4. RDS > Restore from snapshot: Data base will have schemas and data ready
+5. EFS > Restore from snapshot: Disk will be formatted and have data
+6. How storing data in RDS stateless?
+
+### Elastic Beanstalk
+
+> Elastic beanstalk => Under beanstalk -> create application -> choose tier -> name application -> choose platform + branch + version -> Code -> Presets -> configure service access
+
+1. What problem does Beanstalk try to solve?
+2. Common architecture used for most web apps? (ALB + ASG)
+3. When to have a manual deployment setup vs Elastic beanstalk?
+4. List out the components of elastic beanstalk -> Application, its version, env, tiers.
+5. Draw the lifecycle from creating an application, deploying it and also updating it.
+6. Compare web server tier vs worker tier. How do each of them scale and is it possible to push messages to SQS queue from another web server tier?
+7. Compare elastic beanstalk deployment modes -> Single instance vs High availability with load balancer.
+8. Reason for a development environment in beanstalk?
+9. List out service access to create beanstalk environment. (service role, ec2 instance profile and ec2 key pair)
+10. How are the events captured during the initialization of elastic beanstalk? (cloudformation)
+11. How to visually see the template as a diagram? (Application Composer)
+12. Does beanstalk take care of creating security groups on its own for the setup? What about environments for dev, staging or prod?
+13. What does the domain name of elastic beanstalk point to? Does it open ip address of ec2? ASG? ALB? Elastic IP?
+14. What is a stack in cloudformation?
+
+## Amazon S3
+
+1. How is S3 different from EFS, EBS and other storage managed services in AWS?
+2. Compare the pricing of all managed storage services.
+3. Objects -> Files & Buckets -> Directories where buckets are global level and we use a full path to access files, is this true for S3? What are Keys in S3? (full path:> s3://my-bucket/myfile.txt)
+4. Why do buckets must have globally unique names i.e. across regions and across all accounts?
+5. Do we have a naming convention for only S3 service? Why S3 must not start with prefix xn-- nor end with suffix -s3alias?
+6. The key composes prefix + object name, anything else?
+7. When to use multi-part upload? Why to have list of key/value pairs along with S3 as metadata?
+8. Explain more on object ownership and ACL in S3. Differentiate bucket key vs name
+9. Purpose of S3 pre signed url? 
