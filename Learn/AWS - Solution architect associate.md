@@ -1,3 +1,5 @@
+To deploy a full stack application in little to none cost with absolute best performance? What services can be used?
+
 ## 5. EC2 Fundamentals
 ### 44. EC2 Instance purchasing options
 > What are throughput, latency, IO, volume, memory & storage? How are they related
@@ -422,7 +424,7 @@ Redis Elasticache => Under Elasticache, get started ->
 
 ### MyClother.com
 
-1. Lets say the state of a data has to be persisted in a setup with Multi-AZ ASG and Multi-AZ, which is a better approach -> sticky session or web cookies or elasticache? Compare each approach with pros and cons. If sticky session and web cookies are stateless approach, what about elasticache, dynamodb or RDS?
+1. Lets say the state of a data has to be persisted in a setup with Multi-AZ ASG and Multi-AZ AL, which is a better approach -> sticky session or web cookies or elasticache? Compare each approach with pros and cons. If sticky session and web cookies are stateless approach, what about elasticache, dynamodb or RDS?
 2. How to design security groups for restricting traffic to elasticache from ec2, rds from ec2, ec2 from elb? Is it enough to edit just the inbound rules or will editing outbound rules make the application more secure?
 
 ### MyWordPress.com
@@ -460,6 +462,13 @@ Redis Elasticache => Under Elasticache, get started ->
 
 ## Amazon S3
 
+> Create bucket with different policies
+> Create bucket with versioning > Properties
+> Repicate bucket with/without old objects replication > Management
+> Bucket with statis site hosting > Properties
+> Bucket with different classes -> Change it in properties while uploading an object? 
+> Enable lifecycle rules under management with Intelligent-tiering for a bucket
+
 1. How is S3 different from EFS, EBS and other storage managed services in AWS?
 2. Compare the pricing of all managed storage services.
 3. Objects -> Files & Buckets -> Directories where buckets are global level and we use a full path to access files, is this true for S3? What are Keys in S3? (full path:> s3://my-bucket/myfile.txt)
@@ -468,4 +477,95 @@ Redis Elasticache => Under Elasticache, get started ->
 6. The key composes prefix + object name, anything else?
 7. When to use multi-part upload? Why to have list of key/value pairs along with S3 as metadata?
 8. Explain more on object ownership and ACL in S3. Differentiate bucket key vs name
-9. Purpose of S3 pre signed url? 
+9. Purpose of S3 pre signed url?
+10. What is the difference between copy s3 url and copy url in the s3 dashboard?
+11. Draw a decision tree to choose between different security policies in S3. Is it possible to encrypt objects in S3? Why to encrypt?
+12. Is it possible to have access on objects as resource in S3 policy?
+13. How to force objects to be encrypted at upload using s3 bucket policy?
+14. How should the policy be designed for: giving public access to s3 bucket for users to access, give an iam user access, give an ec2 instance access, cross account access (bucket policy)
+15. Even though the s3 bucket is made public with policy why is it not accessible? Troubleshoot. (Check the default permission settings of S3)
+16. Is it possible to configure any bucket that belongs to an account to not be public?
+17. If S3 can be used to host static website, why not with other storage services - EBS, EFS or RDS? What about dynamic websites?
+18. How to enable compatiblity in s3 to host a website? How is the url of this hosted static website different from an object in s3? (Properties > Enable static website hosting)
+19. What does it mean to make all content publicly readable when hosting a static website in a s3 bucket? Does it mean to make the whole bucket to be public or else just the index.html object and dependent objects like images?
+20. What benefit do we get in hosting static websites with S3 bucket?
+21. Is the versioning in S3 automatic or manual? How does it happen? Is it bucket level or object level? Why to version? (restore and rollback)
+22. How to protect against unintended deleted? (have delete marker)
+23. Can suspension of versioning delete previous versions? Will deleting a version of any object will add delete marker?
+24. If deletion adds marker then how to absolutely delete the object?
+25. Is copying in AWS replication asynchronous or synchronous? Does s3 support cross region or only same region replication?
+26. Which one to use for DR? Will it replicate previous versions of all the objects? if not, is there a workaround? (S3 batch replication)  Can object deletion with version id be replicated?
+27. Is it mandatory to have versioning in order to support replication? Why?
+28. Is it possible to replciate existing objects while setting up new replica? How is it possible? (Batch operations job) Wil the versions be replicated as well with their ids? What about delete markers? What will happen if an object is permanently deleted in the source bucket - carries out deletion of the replicated object?
+29. Draw a decision tree to choose between s3 storage clasess. Is durability same across all the classes and what about availability? Does the storage classes apply for bucket level or object level?
+30. General purpose standard S3 storage class susteain 2 concurrent facility failures, does it mean it is setup with multi-az by default? 
+31. How is S3 one zone-infrequent access different from S3 standard-infrequent access?
+32. If S3 glacier instant retrieval is great for data accessed once a quarter why the minimum storage duration of 90 day? Why was the former s3 glacier was divided into variants - instant, flexible and archive?
+33. Compare the data retrival time taken between different glacier types and its variants.
+34. Why does the glacier deep archive alone has minimum storage duration of 180 days
+35. What are access tiers in S3? Why do we need to use S3 intelligent tiering?  Does it cost for both auto-tiering and retriveal charges? Compare the object access period for different access tiers.
+36. What is availability SLA? Which classes have minimum billable object size and don't have retrieval fee? Why?
+37. What are lifecycle rules? and what actions do they support? Is it instant to move existing objects or takes time?
+38. Is it reasonable to have multiple transitions with the storage classes? How about intelligent-tiering and then deep archive?
+39. What is a directory bucket and how is it different from s3 express one zone? (bucket in single AZ) Does it support replication?
+40. What will the version turn out to be for existing files when version in enabled for a s3 bucket?
+
+## Advances S3 *Try to answer different scenarios for lifecycle rules creation*
+
+> Event notifications in Amazon S3 => Properties (Event notifications or Amazon EventBridge) -> Modify access policy of the target service
+
+1. What is the hierarchy of storage classes in S3 for transitioning? How to have a determistic way for the transitions based on a period of time?
+2. With lifecycle rules, is it possible to delete access log files? expire objects after some time? delete old versions of files? delete incomplete multi-part uploads?
+3. Is the lifecycle rules applied on bucket level, object level, certain object tags or directory level in a bucket?
+4. What is a non current version in s3? (which are not top level versions)
+5. Any strategy to transition objects to the right storage class or create lifecycle roles? (storage class analysis) What are the storage classes that support s3 analytics and why? 
+6. What do you mean be "Delete expired object delete markers or incomplete multi part uploads"?
+7. Why do we have the option of requester pays since asking an user to pay to download doesn't feel right?
+8. What is the difference between events and actions in s3? Is it possible to fire events for particular objects or buckets? and what happens in case of an event? does it propogate resources or allows services to access objects from S3?
+9. List out the services the events can be propogated with the S3 objects in cse of an event? (SNS, SQS or Lambda) How should the role be designed? Should the s3 have access to the service it propogates resource on event or else the services should be configured to have access to certiain group of objects in a bucket? why to have service resource policy attached if roles are already present? What does the service resource policy do here? (authorizes s3 to send data to service). Why don't we use iam roles in amazon s3 for these event architecture? Where do we define resource access policies?
+10. Is there a workaround to send events from S3 to services other than sns, sqs and lambda? (amazon event bridge) Does it have better filtering than native one? Which one supports multiple targets? How about archive, replay events and reliable delivery?
+11. Is it possible to capture selective actions on selective filtered objects from s3 then send events to services? What action should be allowed to the targeted service? (send message). For the access policy of the targeted service, which one to be selected in the resource - ARN of s3 or targeted service?
+12. How to test if notifications work? (Poll from targeted service). Should i manually poll from the targeted service to get the notification from s3 on an action?
+13. How are the CRUD operations scaled per second per prefix in a bucket? Are there any limits to the number of prefixes in a bucket? If bucket/folder/sub1/file gets an amount of CRUD operations then what about bucket/folder/file2?
+14. How does multi-part upload work? Does it support parallel uploads?
+15. How is S3 transfer acceleration different from Cloudfront? Can it support multipart upload on top? Why is it good to minimize public network and maximise private AWS network?
+16. When to use mulit-part upload, s3 transfer acceleration or s3 byte range fetches?
+17. Is there an option to parallel downloads and how is download different from GETs? How about parallelizing GETs?
+18. How does S3 Byte range fetches parallelize GETs? (request specific byte ranges). How to get better resilience (retry with smaller byte range), and can this be done in a automated way possible? Is it possible to have partial GETs incase only head of file is needed?
+19. Relate these -> Byte ranges, connections, Seeds and peers (S3 v utorrent)
+20. Why to go for S3 Batch operations? What are the components of a job? (list of objects, action and optional parameters) How to filter and get object list? (Athena) What kind of filtering is available?
+21. How to manage storage across AWS orgs? (Storage Lens) What are the levels the analytics is done with the usage and is it s3 focused or all services? Why is this useful and how many days of analytics can we get? What do you mean by data aggregation and what are the levels this can be done? Does it suport custom dashboard? Differentiate free and advanced metrics.
+22. Is the dashboard - Multi-Region, Multi-AZ or Multi-account. Where is the pre-configuration for the default dashboard? Is it possible to delete the default dashboard?
+23. What are the insights drawn by these metrics - Summary (traffic), Cost-optimization, Data-protection (best practice), Access-management (ownership) , Event, Performance (transfer acceleration), Activity (how storage is requested) and Detailed status (status code)
+24. Are there extra cost for S3 Transfer acceleration? Where to enable it?
+25. Does it cost to publish metrics on cloudwatch? (yes) What is prefix aggregation?
+26. What are S3 expiry actions? Why would we need them?
+
+## S3 Security 
+
+> 
+
+1. Why to encrypt S3 objects? Should it be encrypted on the server or client side? What are the options S3 provides for server side encryption? (S3 managed keys, KMS and Custom provided keys) What is the encryption type used for each of the server side encryption types
+2. What change/configuration should i do in the application to enable server side s2 encryption? (Set header: "x-amz-server-side-encryption":"AES256") Will setting this header automatically allow AWS to encrypt the uploaded data using SSE-S3?
+3. What benefit do we get using key management service for SSE? (user control + audit key usage using cloudtrail) What header do we need to set? ("x-amz-server-side-encryption":"aws:kms")
+4. How is cloudtrail different from cloudwatch?
+5. What if the S3 don't have access to the KMS key? Is this done automatically with the header attached.
+6. If the object is encrypted then can the users that have access to the s3 bucket, can they see the object? It is specified that without the KMS key it is not possible to read the object, does it apply to the public, users with only s3 access and not the kms or users without s3 access?
+7. What is the issue with SSE-KMS? (KMS limits) What action does it trigger? (GenreateDataKey) How to request a quota increase? (Quotas console). Why not to use KMS encryption for high throughput S3 setup? (Throttling). Does it cost to create a new KMS key? 
+8. Will Amazon S3 store the encryption key for server side encryption? If it is mandatory for HTTPS to be used for SSE-C encryption then what about other SSEs? Is there any header for SSE-C? (x-amz-server-side-encryption-customer-algorithm)
+9. Why would we need client side encryption? What systems would need that?
+10. What is an in-transit encryption (SSL/TLS), is the connection between user and target server is secure and fully encrypted or the data in flight is encrypted and can't be hijacked? Does S3 have support for HTTP endpoint?
+11. Is it possible to force encryption in transit? (Deny if aws:SecureTransport condition is false in the bucket policy) What about forcing encryption using a bucket policy? (encryption headers checking)
+12. What is DSSE-KMS, if there is SSE-KMS won't DSSE-KMS seem redundant?
+13. What is the default encryption in S3? Does versioning need to be enabled for encryption? If encryption is changed, will it create a new version for the file with new encryption? What if versioning is off?
+14. Can objects belonging to a bucket have different SSE? What is the role of bucket key option in SSE-KMS?
+15. How about SSE-C, what should the default encryption be that has to be overriden with SSE-C and is it possible only through CLI?
+16. How to force encryption using a bucket policy? Is this applicable only to SSE-KMS or SSE-C and not to SSE-S3 or DSSE-KMS? What do you mean by bucket policies are evaluated before "Default encryption"
+17. What is CORS? Break down Origin (Scheme - Protocol, Host - Domain and Port) Is this web browser based mechanism or else a restriction on the server instance and frontends at cdn/server? Why do we have this and how to allow different origins for requests? (Access-Control-Allow-Origin/Methods: <origin> in headers) Will this happen if i build an app where frontend runs at localhost:5173 and backend at localhost:3000?
+18. What is a preflight request and what is its relation with the CORS? Is the browser checking if an origin from different server is permissiable in another server with different origin i.e. cross origin?
+19. Lets say there are two S3 buckets and one serves a html which has an image which is stored as an object in another. What CORS configuration should be done in order to avoid CORS errors? (Access-Control-Allow-Origin: First S3 bucket url or star)
+20. What are the properties present in a CORS configuration? (Allowed Headers/Methods/Origins, ExposeHeaders and MaxAgeSeconds)? What is the ExposeHeaders and MaxAgeSeconds? Can we have an extra slash in the Allowed Origins?
+21. Does S3 support MFA and what operations does it allow? (permanent delete object version, suspend versioning) Where is this option present - console or cli? (CLI)
+22. Can an IAM user that has full access to a bucket enable/disable MFA delete?
+23. What is the need to login with a profile in CLI?
+
