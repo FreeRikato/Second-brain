@@ -660,3 +660,7 @@ Redis Elasticache => Under Elasticache, get started ->
 27. How to extend SNS with message filtering? (JSON policy sent to SNS topic's subscriptions)
 28. Differentiate Data firehose vs kinesis firehose
 29. What is the purpose of Amazon kinesis data streams? (collect and store data in real-time) How is this done? (Real-time data -> Producers -> Amazon kinesis data streams -> Consumers)
+30. Is it possible to delete data in KDS? (no wait till expiry) What is the retention period and is it possible to replay the streamed data? (365 days, yes)
+31. How to write optimized producer and consumer application? (Kinesis Producer/Client library)
+32. What are the capacity modes in Kinesis Data streams? (provisioned = shards and on-demand)
+33. 
