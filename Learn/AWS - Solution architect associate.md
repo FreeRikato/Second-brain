@@ -568,4 +568,40 @@ Redis Elasticache => Under Elasticache, get started ->
 21. Does S3 support MFA and what operations does it allow? (permanent delete object version, suspend versioning) Where is this option present - console or cli? (CLI)
 22. Can an IAM user that has full access to a bucket enable/disable MFA delete?
 23. What is the need to login with a profile in CLI?
+24. Why do we need access logs for S3? (track accounts - authorized or denied) Where it will be stored and any restriction on where it should be stored? (another bucket in same region) What data analysis to be used? (Athena)
+25. How to give temporary access to a S3 bucket for GET/PUT? (Pre Signed URL) Is it possible for the user to upload a file anywhere in the bucket for which he/she has been given the pre signed url? Does the upload work based on multi part upload or anything else? 
+26. Does S3 have a vault lock feature? (Glacier Vault lock) What is the objective of this vault? (WORM -> Write once and read many) If it is not possible to update or delete the object inside the glacier vault lock what about the policy? If the object can't be deleted at all then is the service immutable and cannot be destroyed even by root or aws itself, woudn't it cost to use this service indefinitely? How it is helpful for compliance and data retention?
+27. How is S3 Glacier vault lock different from S3 Object lock? Does it require versioning to be enabled? What are the retention modes in Object lock and doesn't compliance retention mode the same as S3 Glacier vault lock? How are retention period and legal hold different from each other?
+28. How S3 Acces points make security management easier for S3 buckets? Do these access points have DNS on its own and how to configure them (Access point policy)
+29. How to make it more secured under VPC? (VPC [EC2 -> VPC Endpoint] => [Access point VPC origin -> S3 Bucket]). What are the levels the policies can be defined? (Endpoint, Access point and Bucket)
+30. Is it possible to do operations with the objects in S3 bucket before sending to the target? (Supporting S3 access point -> Lambda function -> S3 Object Lambda Access point).
+31. How is SSE-C different from Client side encryption?
 
+## Cloudfront
+
+1. What is an edge location? Is Cloudfront same as S3 Transfer acceleration? How is it different? How are these possible -> DDoS protection, integration with shield and AWS web application firewall
+2. List out the origins for cloudfront and how it operates? (S3 Bucket, VPC Origin and Custom Origin) How is S3 through cloudfront is protected? (Origin access control)
+3. How is Cloudfront and S3 cross region replication similar but different from each other? Which one support TTL? Which one is best for static vs dynamic content?
+4. What is done in case of live streaming?
+5. Does cloudfront only support website or app delivery and not other objects from S3?
+6. If S3 bucket is a private one and has a cloudfront created out of it then can i access the objects through cloudfront?
+7. Is it possible to allow content delivery from applications hosted in VPC private subnets without internet exposure? (Cloudfront -> VPC Origin -> VPC Private Subnet with ALB, NLB or EC2)
+8. How was ALB/EC2 was was used as an origin in public network? (Edge locations -> ALB/EC2(allow public IPs of edge locations) -> private Ec2). Why is this tedious? (find ips of edge locations for security group, verify security groups of ec2/alb)
+9. Can't people use VPN to bypass cloudfront geo restriction? How to get the country ip range? (3rd party geo-ip database)
+10. What do you mean by updating backend origin? Why doing it wil affect cloudfront cached content and how long will it take to fix? (TTL) How to resolve this? (Cloudfront invalidation) Is it possible to invlidate all files or specific files from a path?
+11. Differentiate global accelerator with transfer acceleration in AWS. What do you mean by hops that lie between source and target, what issues does it cause?
+12. Differentiate Unicast IP vs Anycast IP. What concept does Global accelerator use? How many Anycast IPs are created for application and how does it work? What services support global accelerator? (elastic ip, ec2, alb, nlb) Can the service be private or public?
+13. Why aren't there no issue with client cache? (no ip change) What is the failover time to deem unhealthiness? (1 min) How does AWS ensure DDoS protection of traffic in global accelerator? (AWS Shield)
+14. Find the similarity and differences in global accelerator, cloudfront and transfer acceleration. What does adding endpoint groups vs endpoints in global accelerator mean?
+15. Does a global accelerator have 2 static ips always?
+16. How to restrict users from continuing to use s3 url to go to the static website and enforce them to use the cloudfront path?
+
+## AWS Extra storage
+
+1. What service is useful for secured collection and processing of data at the edge migrating data into and out of AWS with portable devices? (Snowball). What are the variants in snowball family? (compute and storage optimized)
+2. List out the main use cases of snowball device. (Ship huge data from client to s3 and edge computing i.e. process data while being created with limited power & no access to compute)
+3. If snowball cannot import directly to glacier directly, how to work around this? (snowball -> amazon s3 -> amazon glacier using s3 lifecycle policy)
+4. Why do we need FSx if there is EBS instance store already? (3rd party high-performance fs) Is it fully or semi managed service and list out some variants. (wfs, lustre, ontap, openzfs). What variants support seamless support for S3 to both read and writes, used from on-premises servers (VPN/Direct connect)?
+5. For Amazon Fsx for window, What protocols (smb, ntfs) does it support and how about the integrations (MS active directory, ACLs and user quotas). Can it be mounted in Linux EC2 instances? Does it offer support to MS Distributed FS and Namespaces? (yes and also group files across multiple FS). Is data backed up? (Daily to S3)
+6. For Amazon FSx for Lustre, what is its used for? (distributed FS with large-scale computing linux+cluster) What are its use case? (ML, HPC and Video processing)
+7. Compare FSx FS deployment options. (Scratch and Persistent - Temporary/Long-term, Replication, Failover support)
