@@ -608,4 +608,22 @@ Redis Elasticache => Under Elasticache, get started ->
 8. For Amazon FSx fr NetApp ONTAP, what are the supported protocols? (NFS, SMB and iSCSI protocols) What is its main use case? (Moving workloads from ONTAP/NAS to AWS). How is FSx for OpenZFS different from this? (Move workfloads on ZFS to AWS)
 9. Draw a decision tree to choose among different variants of the Amazon FSx 
 10. What is the purchasing cost among the variants of Amazon FSx
-11. Why do we need storage gateway and why would AWS push fo hybrid cloud? What is hybrid cloud in the first place? How to expose the S3 data on-premises in a hybrid cloud setup?
+11. Why do we need storage gateway and why would AWS push fo hybrid cloud? What is hybrid cloud in the first place? How to expose the S3 data for on-premises in a hybrid cloud setup? (AWS Storage Gateway - bridge between on-premise to cloud)
+12. What are the AWS Storage cloud native options? (Block storage - EBS + EC2, File - EFS & FSx and Object - S3 & Glacier)
+13. Doesn't Amazon Glacier come under S3 or else is it a separate service?
+14. Can this be useful for home labbing purposes? Where the cloud is used as backup with little to no cost?
+15. What are the types of Storage gateways present? (S3 file, volume and tape) List out what each of the types purpose.
+16. Why don't S3 file gateway support glacier? What workaround is possible for archiving? (lifepolicy for glacier) What is the architecture andp protocol configuration made? (Application server <-NFS/SMB->S3 File gateway <-HTTPS-> AWS S3 -> S3 Glacier)
+17. How is volume dateway different from S3 file gateway? Which protocol is used and how is the backup done? (iSCSI, EBS snapshots). Differentiate cached vs stored volumes.
+18. Where and when are the backups stored of the EBS snapshots? (scheduled to S3)
+19. How is volume different from file, block or object storage?
+20. What is a tape and why was it replaced lately for storage purpose? Does it follow the same architecture of storing backed by S3 and archived to glacier same as S3 file gateway? What protocol is used here? (iSCSI interface). Does Amazon S3 support Tape library?
+21. List out the sources for each type of AWS Storage gateway options. (User/group file shares, Application server and Backup application)
+22. What does it mean to have the storage gateway near to on-premises vs AWS?
+23. When to go for AWS transfer family? (file transfer into and out of of s3/efs using FTP). List out all supported protocols here. (FTP, FTPS and SFTP). Is the encryption in-flight, on-receive or on-send? (in-flight)
+24. What is AWS DataSync and how is it different from backup and caching services?
+25. Differentiate - synchronize, backup, replication, de duplication and migration.
+26. What type of storages does it support? (S3, EFS and FSx). Does data sync run in a continous or scheduled manner?
+27. What will happen to the file permissions and metadata? (preserved)
+28. Where is the AWS DataSync agent installed, what is its purpose?
+29. In case of a constraint where network capacity is limited, what can be done instead of using DataSync? (AWS Snowcone that has DataSync agent pre-installed). Can AWS DataSync support for AWS to another cloud and Services within AWS? (yes)
