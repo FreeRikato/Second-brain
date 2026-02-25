@@ -605,3 +605,4 @@ Redis Elasticache => Under Elasticache, get started ->
 5. For Amazon Fsx for window, What protocols (smb, ntfs) does it support and how about the integrations (MS active directory, ACLs and user quotas). Can it be mounted in Linux EC2 instances? Does it offer support to MS Distributed FS and Namespaces? (yes and also group files across multiple FS). Is data backed up? (Daily to S3)
 6. For Amazon FSx for Lustre, what is its used for? (distributed FS with large-scale computing linux+cluster) What are its use case? (ML, HPC and Video processing)
 7. Compare FSx FS deployment options. (Scratch and Persistent - Temporary/Long-term, Replication, Failover support)
+8. 
