@@ -636,20 +636,3 @@ Redis Elasticache => Under Elasticache, get started ->
 3. What is this practice called - at least once delivery and out of order messages i.e. best effort ordering. Are there any limits to the size of a message and number of messges received by a consumer (yes, 1024 KB and upto 10 messages at a time)
 4. How to configure producers to send messages to the SQS (SDK - SendMessage API). Can multiple Lambda functions used as consumers?
 5. Is the DeleteMessage API trigger automatically once the consumer completes processing a message?
-6. Lets say there are a number of EC2 instances in an ASG acting as the consumers, what if the queue length indefinitely grows? Is there a way other than manually measuring the queue length? (Set alarm for breach in Cloudwatch metric -> Queue length: ApproximateNumberOfMessages to increase ASG capacity)
-7. What encryptions do SQS support? (in-flight using HTTPS, at-rest using KMS keys and client side encryption)
-8. The lecturer sends a message with body "hello world!" and polls for messages, messages available turn out to be 1 and the receive count is 1 then it increments to 2 all of a sudden and when he clicks on poll for messages the receive count changes to 3. What happened? Lecturer mentions the message wasn't processed in enough time so after 30 seconds, message went back into queue. How does this happen?
-9. Can the messages in queue be deleted all at once without deleting the queue itself? (purge action)
-10. What is the default at-rest encryption used?
-11. Explain what is a message visibility timeout and how it can be used to fix two consumers receiving the same message from the queue? When a message is returned from ReceiveMessage Request it enters a visibility timeout where any other ReceiveMessage Request will not return the message and if the message is not processed and deleted within the visbility timeout period of X (default: 30) seconds then it is procssed again
-12. Is it possible to alter the message timeout visibility window? (ChangeMessage API) What happens in case of high timeout and low timeout?
-13. How is long polling different from visibility timeout window and how does it affect the latency of application? Does it mean like it waits 20 seconds for any message in the SQS queue and then make another request to again wait for 20 seconds to see if there is any new message? Longer => good and short => bad, why?
-14. Is it using ChangeMessage API? (WaitTimeSeconds)
-15. In case the message has to be processed in an ordered way and doesn't allow duplication, how to handle this? (FIFO queue with deduplication ID with the message) What is a message group, is it batching of the messages with order? Any naming convention to be followed (end with .fifo)
-16. Why SQS + ASG of EC2 a powerful combination? (Scale up/down based on queue size using cloudwatch metric + alarm). Show a scenario where SQS acts as a buffer to database writes. (Enqueue messages with ASG EC2 -> SQS Queue -> Dequeue messsages with ASG EC2 -> RDS/Aurora/DynamoDB)
-17. How is producer consumer concept different from publisher subnscripter? When to use what?
-18. Lets say a message has to be sent to multiple receivers but integrating this across different receivers is cumbersome. How can this be handled? (Send message into SNS topic -> Many subscribers. All get the same message from the topic)
-19. Is it possible to restrict a subscriber to not get certain messages? (yes with filter)
-20. What are the possible ways to publish via SNS? (Email, sms, data to http endpoints and services - sqs, lambda and kinesis data firehose)
-21. Can SNS act as receiver for another service? If yes, why? Differentiate topic vs direct publish.
-22. How is encryption in SNS different from SQS?
