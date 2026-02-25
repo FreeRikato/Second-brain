@@ -605,5 +605,7 @@ Redis Elasticache => Under Elasticache, get started ->
 5. For Amazon Fsx for window, What protocols (smb, ntfs) does it support and how about the integrations (MS active directory, ACLs and user quotas). Can it be mounted in Linux EC2 instances? Does it offer support to MS Distributed FS and Namespaces? (yes and also group files across multiple FS). Is data backed up? (Daily to S3)
 6. For Amazon FSx for Lustre, what is its used for? (distributed FS with large-scale computing linux+cluster) What are its use case? (ML, HPC and Video processing)
 7. Compare FSx FS deployment options. (Scratch and Persistent - Temporary/Long-term, Replication, Failover support, Single vs Double copy)
-8. For Amazon FSx fr NetApp ONTAP, what are the supported protocols? (NFS, SMB and iSCSI protocols) What is its main use case? (Moving workloads from ONTAP/NAS to AWS) 
+8. For Amazon FSx fr NetApp ONTAP, what are the supported protocols? (NFS, SMB and iSCSI protocols) What is its main use case? (Moving workloads from ONTAP/NAS to AWS). How is FSx for OpenZFS different from this? (Move workfloads on ZFS to AWS)
 9. Draw a decision tree to choose among different variants of the Amazon FSx 
+10. What is the purchasing cost among the variants of Amazon FSx
+11. Why do we need storage gateway and why would AWS push fo hybrid cloud? What is hybrid cloud in the first place? How to expose the S3 data on-premises in a hybrid cloud setup?
