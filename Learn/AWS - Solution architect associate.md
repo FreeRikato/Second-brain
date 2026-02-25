@@ -653,3 +653,10 @@ Redis Elasticache => Under Elasticache, get started ->
 20. What are the possible ways to publish via SNS? (Email, sms, data to http endpoints and services - sqs, lambda and kinesis data firehose)
 21. Can SNS act as receiver for another service? If yes, why? Differentiate topic vs direct publish.
 22. How is encryption in SNS different from SQS?
+23. What is the issue sending messages individually to multiple SQS queues at once? How to handle it? (Fan out pattern :Push an SNS topic and subscribe via multiple SQS queues). How to send S3 events to multiple queues for example, with the same combination of event type and prefix it is only possible to have one S3 event rule. How to bypass this? (Fan-out)
+24. Is it possible for SNS to send data to S3? (Service -> SNS Topic -> Kinesis Data firehose -> S3)
+25. Does SNS support FIFO communciation? (Yes and with same limitations of FIFO SQS) What services support FIFO SNS? (only FIFO SQS)
+26. Give an use case of SNS FIFO + SQS FFO: Fan out pattern. (Bank) 
+27. How to extend SNS with message filtering? (JSON policy sent to SNS topic's subscriptions)
+28. Differentiate Data firehose vs kinesis firehose
+29. What is the purpose of Amazon kinesis data streams? (collect and store data in real-time) How is this done? (Real-time data -> Producers -> Amazon kinesis data streams -> Consumers)
