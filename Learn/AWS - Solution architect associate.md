@@ -676,4 +676,59 @@ Redis Elasticache => Under Elasticache, get started ->
 
 ## Containers on AWS: ECS, Fargate, ECR and EKS
 
-1. 
+1. What is a docker agent and what does it do when a docker container is run?
+2. How is a docker image made and where to get them? (Docker repositories)
+3. Relate docker with virtual machines. When to use what appropriately
+4. Tell the public repository equivalent of docker hub in AWS (ECR Public gallery)
+5. Is docker daemon equivalent to the hypervisor in virtual machines? Which one is more secure? (VM) Which one is more flexible?
+6. For a virtual machine, the resources are fixed, does it support vertcal scaling automatically? In both cases, What if there is huge outage and VM runs out of resources?
+7. What is an Amazon firecracker and is it a VM or container? 
+8. How are Amazon ECR and ECS different? Where does EKS come into picture? How would be AWS fargate be helpful on top of ECS and EKS?
+9. What happens behind the screen on AWS when a docker container is launched? (Launch EC Tasks on ECS Clusters) Are there any other launch types other than EC2? Are Docker agent and ECS agent same? What is the role of ECS agent running inside the EC2 instances. Who takes care of creating,running and stopping docker containers in different EC2 instances in an ECS cluster? Should the EC2 instances, ECR clusters and Docker containers manually be monitored for provisioning and scaling?
+10. Give an overview on -> ECS, ECS Cluster, EC2, ECS agent, Docker container 
+11. How is fargate launch type different from the EC2 launch type? What is a ECS task and who is responsible of defining the resources the ECS task take up and scaling it accordingly?
+12. Where does ECS service come into play in EC2 launch type and Fargate launch type?
+13. For the EC2 instance profile, how should this role be defined in order to make API calls to ECS, send container logs to cloudwatch, pull docker images from ECR and reference sensitive data in secrets manager?
+14. For the ECS Task role, Should each task have different roles designed? Are tasks different docker container runs?
+15. Why to use network load balancer paired with AWS private link on top of an ECS cluster?
+16. Is ECS cluster the same as auto scaling group?
+17. Why classic load balancer is never recommended? Where does it fall back compared to other ELB options?
+18. Do different EC2 instances run different containers or applications? How can data persist in ECS cluster? Is the persisted data accessible by any EC2 instances or ECS Tasks in the ECS cluster?
+19. If EFS is mounted to each tasks then won't there be a conflict in reads and writes with the same EFS?
+20. Differentiate instance vs infrastructure role in fargate cluster. Why should we create it in the first place and its not configured for the ECS cluster and EC2 instances in i automatically?
+21. Is it possible to define custom instances type with attribute values (cpu, memory)?
+22. Does ECS create a new ASG on its own for fargate + self managed instances option? Isn't there a desired capacity configuration for this option? For the infrastructure, in capacity providers what are fargate task, spot mode and ASG provider?
+23. What if the task size and the self managed instances resource don't match? Is it possible to define different EFS storage space for different ecs tasks and then use it inside same fargate? Differentiate ecs tasks vs services. Are containers and tasks same? Do all the containers run in the same AZ or different AZ?
+24. Differentiate AWS application auto scaling and ASG. Compare ECS service auto scaling and EC2 auto scaling. How about Auto scaling group scaling vs ECS cluster capacity provider. Draw a comparison chart on all of these scaling options
+25. What are the ways to integrate Amazon event bridge with a ECS task inside AWS fargate on an ECS Cluster?
+26. How can SQS Queue and ECS be integrate in order to run containers for asynchronous processing? Who is responsible of creating new tasks based on the queue size?
+27. Is it possible to get notified in case of a task failure in ECS cluster? (ECS Task failure -> Event bridge -> SNS)
+28. How to completely clean up an ECS service? Where does cloudformation comes into the picture here?
+29. Where are the docker iamges backed up in AWS? (S3)
+30. How many services in AWS use S3 for backup?
+31. Why would we need an IAM role for EC2 instance inside ECS cluster to pull images from ECR if we directly define a task with the docker image and use it inside the service? Why would we need these manual operations?
+32. Why would need kubernetes on top of all the auto-scaling options in AWS for containers
+33. What is the difference between ECS and Kubernetes?
+34. What is the hierarchy and relation between - VPC, AZ, public/private subnets, EKS node, EKS pods, ASG, EC2 instances, EKS worker nodes, ELB and NGW
+35. Differentiate node types in EKS - Managed node groups vs Self-managed nodes vs Fargate
+36. What about data persistence in EKS? What is StorageClass manifest, container storage interface? 
+37. Out of EBS, EFS and  Amazon FSx for Lustre/NetApp, which one supports ECS and EKS?
+38. Do ECS support private subnets? What is a node group and how is it different from worker nodes?
+39. If there is an IAM role already for the EKS, why to create roles for the components inside EKS like node groups?
+40. Compare among - ECS, EKS, Lambda and App runner then draw a decision tree
+41. What happens behind the scene when an AWS app runner starts?
+42. How to run legacy Java and .NET web apps as docker containers? (App2Container) What is the concept of lift and shift?
+
+## Serverless
+
+### Overview
+
+1. Why was it called FaaS initally and why did it change? Doesn't it mean all managed services are servless?
+2. What is AWS Cognito?
+3. Come up with the relation between API gateway and Lambda functions.
+4. List out all the serverless features provided by AWS.
+5. What is fargate as a standalone service?
+6. Why to go for AWS Lambda? Compare EC2 reserved instances + spot instances vs reserved instances + AWS Lambda
+7. What is the right way to scale infrastructure as the application grows?
+8. Is there lambda service for containers?
+9. List out lambda integrations?
