@@ -667,4 +667,13 @@ Redis Elasticache => Under Elasticache, get started ->
 34. What is a shard iterator and its purpose with the data streams? Compare shared consumption mode vs fan out pattern.
 35. How is Amazon Data Firehose different from Amazon Kinesis data stream? Which one supports data transformation? Can we think of it like a bucket with a hole on its bottom thats closed where water (data)   different sources (producers) and then opened up to send a chunk of water (batch writes) into different destinations (AWS, 3rd party or custom destinations)? What about failed data? (S3 to store all or failed data)
 36. What is the need for a buffer inside ADF? Does both data streams and data fireshose come under kinesis?
-37. Lets say the buffer size is set to 5 MB so that producers have to accumulate data of atleast 5 MB for the data firehost to send it to the destination. What if the accumulated data is just 4 MB and there is no more data accumulated? What will happen to this data? (Handle with buffer interval). How to write errors or all data into S3 for fail-safe or storage?
+37. Lets say the buffer size is set to 5 MB so that producers have to accumulate data of atleast 5 MB for the data firehost to send it to the destination. What if the accumulated data is just 4 MB and there is no more data accumulated? What will happen to this data? (Handle with buffer interval). How to write errors or all data into S3 for fail-safe?
+38. How to choose between SQS, SNS vs Kinesis? What is the standard vs fan out options in kinesis?
+39. If the applications running on-premises use open protocols such as: MQTT, AMQP, STOMP or WSS then SQS and SNS services can't be used, what is the workaround that can be done here? (Amazon MQ - managed service broker service for RabbitMQ and Active MQ).
+40. How are message brokers different from Queues, Asychronous background jobs and Pub/subs
+41. Amazon MQ doesn't scale like SQS/SNS, how to improve its failover? (as AMQ runs on server -> Multi-AZ server setup with EFS as backend storage)
+42. How to order data in kinesis data stream? (add partition key representing identity of the user)
+
+## Containers on AWS: ECS, Fargate, ECR and EKS
+
+1. 
