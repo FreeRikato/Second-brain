@@ -732,3 +732,4 @@ Redis Elasticache => Under Elasticache, get started ->
 7. What is the right way to scale infrastructure as the application grows?
 8. Is there lambda service for containers?
 9. List out lambda integrations?
+10. Compare pay per calls vs pay per duration. 
