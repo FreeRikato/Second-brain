@@ -665,3 +665,6 @@ Redis Elasticache => Under Elasticache, get started ->
 32. What are the capacity modes in Kinesis Data streams? (provisioned = shards and on-demand)
 33. Is it possible to get a particular data/shard from the stream in Kinesis Data streams?
 34. What is a shard iterator and its purpose with the data streams? Compare shared consumption mode vs fan out pattern.
+35. How is Amazon Data Firehose different from Amazon Kinesis data stream? Which one supports data transformation? Can we think of it like a bucket with a hole on its bottom thats closed where water (data)   different sources (producers) and then opened up to send a chunk of water (batch writes) into different destinations (AWS, 3rd party or custom destinations)? What about failed data? (S3 to store all or failed data)
+36. What is the need for a buffer inside ADF? Does both data streams and data fireshose come under kinesis?
+37. Lets say the buffer size is set to 5 MB so that producers have to accumulate data of atleast 5 MB for the data firehost to send it to the destination. What if the accumulated data is just 4 MB and there is no more data accumulated? What will happen to this data? (Handle with buffer interval). How to write errors or all data into S3 for fail-safe or storage?
