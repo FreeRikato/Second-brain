@@ -1,0 +1,3 @@
+- A project where a telegram bot checks on an hourly basis from 9 AM to 11 PM with todos for the day
+- Learn to deploy frontend and backends in the most frictionless way possible with no cost and easy to recreate across devices via custom domain
+- 
