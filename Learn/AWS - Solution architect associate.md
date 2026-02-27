@@ -733,3 +733,5 @@ Redis Elasticache => Under Elasticache, get started ->
 8. Is there lambda service for containers?
 9. List out lambda integrations?
 10. Compare pay per calls vs pay per duration. 
+11. How to handle the cold starts in AWS Lambda service?
+12. 
