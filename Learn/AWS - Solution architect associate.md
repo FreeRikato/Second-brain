@@ -737,4 +737,7 @@ Redis Elasticache => Under Elasticache, get started ->
 12. How to handle situations when lambda functions error out or fail to run? Where to monitor the logs for lambda function?
 13. How does lambda measure compute and calculate the cost?
 14. For monitoring, logging and watch services in AWS, should they be configured role or security group for the target service? 
-15. 
+15. In Execution limit for lambda, what is the difference between memory and disk limits? What will happen to the RAM where temporary accessible memory is used by the lambda function, won't it affect another lambda function? What about the disk storage for persistence, wouldn't it overlap with storage used by another lambda function? Where to load environment variables to use inside a lambda function?
+16. Differentiate Execution and Deployment limits in AWS. Why is compressed deployment size limit less compared to uncompressed? Is there a workaround to storing larger files to bypass? (/tmp directory)
+17. How to decide whether to use lambda or not or use it along with a persistent VPC or not?
+18. Can the lambda function be dependent on each other? Why to have a reserved concurrency?

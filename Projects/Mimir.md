@@ -1,3 +1,0 @@
-- [ ] Feature to toggle between subtitle extraction format
-- [ ] The default option of copy&close button should be off and not persistent
-- [ ] 
