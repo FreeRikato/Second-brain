@@ -1,0 +1,1 @@
+A recent skill/knowledge that i acquired recently was AWS, My company sponsored me to take up the course and exam for AWS Solution architect - Associate level. This had a huge impact on me while designing applications, reverse-engineering existing solutions, self hosting applications from my personal laptop and automating stuff that would have taken me a lot of time. 
