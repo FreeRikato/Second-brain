@@ -741,3 +741,10 @@ Redis Elasticache => Under Elasticache, get started ->
 16. Differentiate Execution and Deployment limits in AWS. Why is compressed deployment size limit less compared to uncompressed? Is there a workaround to storing larger files to bypass? (/tmp directory)
 17. How to decide whether to use lambda or not or use it along with a persistent VPC or not?
 18. Can the lambda function be dependent on each other? Why to have a reserved concurrency?
+19. What is throttle? What are the types of invocation and when to use what? What is a DLQ and is it the same as SQS?
+20. Is the lambda rate limit is on a  service or account basis?
+21. What is a cold start and how to handle them? (provisioned concurrency) How can application auto scaling manage concurrency? What is schedule/target utilization?
+22. What is a warm pool? how is it different from provisioned concurrency? Does it cost extra to have this?
+23. What are the lifecycle phases to lambda function? (init -> invoke -> shutdown) [pre-initialization of the function] What happens when a new version is published?
+24. Differentiate cloudfront functions with lambda@edge, how are they different from lambda functions? When to use what? Do they have cold starts?
+25. Why can't lambda access resources in private VPC or subnet? How to handle this scenarios?
