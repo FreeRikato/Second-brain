@@ -734,4 +734,7 @@ Redis Elasticache => Under Elasticache, get started ->
 9. List out lambda integrations?
 10. Compare pay per calls vs pay per duration. 
 11. How to handle the cold starts in AWS Lambda service?
-12. 
+12. How to handle situations when lambda functions error out or fail to run? Where to monitor the logs for lambda function?
+13. How does lambda measure compute and calculate the cost?
+14. For monitoring, logging and watch services in AWS, should they be configured role or security group for the target service? 
+15. 
