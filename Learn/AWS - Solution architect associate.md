@@ -1,5 +1,6 @@
 To deploy a full stack application in little to none cost with absolute best performance? What services can be used?
 
+
 ## 5. EC2 Fundamentals
 ### 44. EC2 Instance purchasing options
 > What are throughput, latency, IO, volume, memory & storage? How are they related
@@ -750,3 +751,18 @@ Redis Elasticache => Under Elasticache, get started ->
 25. Why can't lambda access resources in private VPC or subnet? How to handle this scenarios? (define VPC ID, subnets and security groups to connect lambda with ENI)
 26. What is the main problem that occurs if we allow direct database access for lambda functions? (too many open connections) How to handle this? (RDS Proxy) Is this a load balancer for database?
 27. What does it mean to deploy lambda function in VPC, what are the deployment options for lambda functions? What deployment type to be used for using RDS proxy? Where does the RDS proxy lie - Private subnet within VPC or Public internet or Public subnet within VPC? 
+28. Why to invoke lambda from RDS/Aurora? (process data events) How is this different from RDS event notifications? (info abt db instance and not data)
+29. Is the replication and multi-az native default to DynamoDB? Can it have relations and transactions? Does dynamo db require maintenenace or patching?
+30. does it have different classes like s3 for accessing data? what about provisioned vs on-demand mode? if provisioned mode supports auto scaling then it is kind of on-demand as well am i right? How is on-demand more expensive than provisioned mode if we pay for what we use in both modes?
+31. How is DAX different from elasticache? How to use elasticache and DAX together? What is stream processing? Which service to use - DynamoDB streams or Kinesis data streams? how to delete items after a period in dynamodb - manual, TTL or cron jobs? Differentiate between continuous and on-demand backups. Is it possible to have life-sickling policies for backup?
+32. How does the import and export work between Amazon S3 and DynamoDB?
+33. compare the cost among spot instances versus lambda functions with warm pool and reserved instances
+34. What are API getways in serverless and what role do they play in lambda functions, http endpoints or other AWS services? What are the different enpoint types?
+35. Are cloudfront just for CDN, route traffic to nearest edge or run functions in the nearest edge to the user? What is a resource policy and how can it be helpful to access API gateway from VPC using ENI?
+36. Where should the SSL/TLS certificates be present for an edge optimized endpoint?
+37. Do serverless api gateways support websocker? What is lambda proxy integration?
+38. When to go for AWS step functions? When is it an overkill and should use VPS instead? Does step functions have human in the loop feature?
+39. Why do we have amazon cognito? Is it oauth or jwt based? Differentiate cognito user pools vs cognito identity pools. How is this different from IAM? Is this authentication as service? If cognito user pools create a serverless database of users for our application then do we have a separate user table in rds or dynamo db for business logic?
+40. How does the intgration of cognitor user pool with api gateway to work in a serverless backend (lambda functions)? How about aith an ALB? Is it possiible to cache responses on api gateway level?
+41. Why is dynamodb called serverless in comparison to aurora and rds?
+42. 
