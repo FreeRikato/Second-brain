@@ -786,3 +786,10 @@ Redis Elasticache => Under Elasticache, get started ->
 
 1. Does AWS offer any service which can be used to find objects, people, text, scenes in images/videos using ML?(Amazon rekognition)
 2. How to moderate content especially with images and videos using ML along with human manual review? (Set minimum threshold in ARK + Augmented AI)
+3. What about transcription of audio - What AWS service provides this feature? (Transcribe) Does it support removing personal information? (remove PII using redaction)
+4. How about TTS? (Polly) Is it possible to customize pronounciation of words? (pronounciation lexicons) Is there a better approach to this? (SSML - Speech synthesis markup language)
+5. Tell me the underlying architecture in Alexa. (Amazon Lex), How can it be used to build virtual contact center that is cloud-based to create contact flows on receiving a call? (Call -> Amazon Connect -> Lex -> Lambda -> CRM) 
+6. How to extend lex to have a service for NLP? (Amazon Comprehend) How is it different from Amazon Lex? How can this be extended to medical text? (Comprehend Medical) how can sensitive data be hidden here? (Personal Health Information with NLP)
+7. What about building ML models i.e. labeling, buidling, training and tuning where it can be done in one place inside AWS? (SageMaker)
+8. Is Amazon kendra cloud based RAG?
+9. How about personalized recommmendations in real time? (Personalize)
