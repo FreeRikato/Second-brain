@@ -765,4 +765,19 @@ Redis Elasticache => Under Elasticache, get started ->
 39. Why do we have amazon cognito? Is it oauth or jwt based? Differentiate cognito user pools vs cognito identity pools. How is this different from IAM? Is this authentication as service? If cognito user pools create a serverless database of users for our application then do we have a separate user table in rds or dynamo db for business logic?
 40. How does the intgration of cognitor user pool with api gateway to work in a serverless backend (lambda functions)? How about aith an ALB? Is it possiible to cache responses on api gateway level?
 41. Why is dynamodb called serverless in comparison to aurora and rds?
-42. 
+
+## Data & Analytics
+42. How is documentdb different from dynamodb and monogdb?
+43. Is athena server or serverless query service to analyze data stored in S3? If S3 uses key value store under the hood then how can we use SQL language to query the files? Is it built on top of mysql or postgres database engine? (presto) How to use amazon quicksight in compliment with athena?
+44. Why are columnar data like apache parquet or orc recommented? How do they contribute to cost savings.
+45. What is an ETL job in AWS?
+46. Show me an example of partitioning data sets in S3 to get easy querying for Amazon Athena.
+47. How can data source connector be helpful? What is the workflow to use it along with amazon athena?
+48. Differentiate between OLTP and OLAP? Which service to use for these processing? Is Redshift based on mysql or postgres?
+49. Explain the workflow to use redshift with S3 copy and what happend under the thood with the cluster having leader and compute nodes. Is there a workaround to query data in S3 without loading it? (Redshift spectrum)
+50. What is the difference between AWS OpenSearch vs ElasticSearch? Is it possible to use SQL? (should be enabled since it doesn't natively support) Can it be used for storing data for an application? What kind of analysis can be done using OpenSearch?
+51. Is it possible to use opensearch for partial searching cloudwatch logs? (subscription filter with lambda or kinesis data firehose)
+52. What are Aamazon EMR? (Create Hadoop clusters) If these are data then why the clusters are made of hundreds of EC2 instances instead of databases? Compare the different nodes present in EMR? (Master, core, task) 
+53. Which service can be used to create interactive dashbaords? (QuickSight) How does it work under the hood? (Serverless ML-powered BI) What comes under QuickSight - Dashbaord generation or ML prediction and data? How to get better performant computations? (In-memory computation using SPICE) Is it possible to have column level security for the dashbaords? (Enterprise edition)
+54. When to go for redshift vs athena vs quicksight?
+55. How is AWS Glue different from lambda functions for ETL service? What is the use of glue data catalog?
