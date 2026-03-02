@@ -781,3 +781,8 @@ Redis Elasticache => Under Elasticache, get started ->
 53. Which service can be used to create interactive dashbaords? (QuickSight) How does it work under the hood? (Serverless ML-powered BI) What comes under QuickSight - Dashbaord generation or ML prediction and data? How to get better performant computations? (In-memory computation using SPICE) Is it possible to have column level security for the dashbaords? (Enterprise edition)
 54. When to go for redshift vs athena vs quicksight?
 55. How is AWS Glue different from lambda functions for ETL service? What is the use of glue data catalog?
+
+## Machine Learning
+
+1. Does AWS offer any service which can be used to find objects, people, text, scenes in images/videos using ML?(Amazon rekognition)
+2. 
