@@ -748,3 +748,4 @@ Redis Elasticache => Under Elasticache, get started ->
 23. What are the lifecycle phases to lambda function? (init -> invoke -> shutdown) [pre-initialization of the function] What happens when a new version is published?
 24. Differentiate cloudfront functions with lambda@edge, how are they different from lambda functions? When to use what? Do they have cold starts?
 25. Why can't lambda access resources in private VPC or subnet? How to handle this scenarios?
+26.
