@@ -747,5 +747,6 @@ Redis Elasticache => Under Elasticache, get started ->
 22. What is a warm pool? how is it different from provisioned concurrency? Does it cost extra to have this?
 23. What are the lifecycle phases to lambda function? (init -> invoke -> shutdown) [pre-initialization of the function] What happens when a new version is published?
 24. Differentiate cloudfront functions with lambda@edge, how are they different from lambda functions? When to use what? Do they have cold starts?
-25. Why can't lambda access resources in private VPC or subnet? How to handle this scenarios?
-26.
+25. Why can't lambda access resources in private VPC or subnet? How to handle this scenarios? (define VPC ID, subnets and security groups to connect lambda with ENI)
+26. What is the main problem that occurs if we allow direct database access for lambda functions? (too many open connections) How to handle this? (RDS Proxy) Is this a load balancer for database?
+27. What does it mean to deploy lambda function in VPC, what are the deployment options for lambda functions? What deployment type to be used for using RDS proxy? Where does the RDS proxy lie - Private subnet within VPC or Public internet or Public subnet within VPC? 
