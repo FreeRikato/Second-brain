@@ -785,4 +785,4 @@ Redis Elasticache => Under Elasticache, get started ->
 ## Machine Learning
 
 1. Does AWS offer any service which can be used to find objects, people, text, scenes in images/videos using ML?(Amazon rekognition)
-2. 
+2. How to moderate content especially with images and videos using ML along with human manual review? (Set minimum threshold in ARK + Augmented AI)
