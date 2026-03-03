@@ -802,4 +802,26 @@ Redis Elasticache => Under Elasticache, get started ->
 3. Do services store logs by default? Where are the logs stored actually? Differentiate log groups, log streams and log policies
 4. Differentiate cloudwatch logs vs unified agent. How to search and analyze log data stored in cloudwatch logs? (cloudwatch logs insights)
 5. What are cloudwatch logs subscriptions? How are they different from the streams? Can this subscription be configured to watch multi account cloudwatch logs and store it? (Yes, Kinesis data firehosti -> S3) What is log aggregation?
-6. 
+6. Is it possible to see the tail of the logs live in console? (Cloudwatch live tail) Is this unlimited? (No, 1 hour per day is free)
+7. Are the logs automatically pushed form services like EC2 to cloudwatch? If i can ssh and see the logs then why would need the cloudwatch in the first place?
+8. What did the cloudwatch unified agent have extra compared to the logs agent? (sytem level metric and also configurable with SSM parameter store)
+9. Why do we have a separate service for alerting the user if SNS already exists? What are the states in it?
+10. List out the main alarm targets. (EC2, AS, SNS)
+11. Is it possible to have an alarm on top of alarms? (composite alarms)
+12. How to use cloudwatch alarm for EC2 instance recovery? (Status check -> Alert -> SNS topic)
+13. How can cloudwatch alarm and cloudwatch logs used together?
+14. Lets say there is a direct connection with an on premise corporate data center and cloud. How to monitor the network between the apps apps hosted on this hybrid setup? (Cloudwatch network synthetic monitor) Is the connection from on premise to cloud or vice-versa which one is checked? (cloud to on-premise)
+15. What is the relation between Amazon event bridge and cloud watch events? Is it possible to define a reaction on an event pattern like root sign-in? how about third party services? (Partner event bus) What is event bus and What is the difference between default event bus vs partner event bus vs custom event bus?
+16. What do you mean by the ability to replay archived events in Eventbridge?
+17. What is the use of schema registry in Eventbridge?
+18. How to manage permissions for a specfic event bus? (resource-based policy)
+19. What are cloudwatch insights? List out the types. (container, lambda, contributor)
+20. Is there a way to monitor applications as a whole that is deployed with multiple AWS services integrated in it? (Automated dashboards from Cloudwatch application insights powered by SageMaker)
+21. How is cloudwatch logs different from aws cloudtrail? List out the types of events in cloudtrail. (management, data, cloudtrail insights)
+22. Differentiate cloudwatch insights and cloudtrail insights.
+23. How to persist events stored in cloudtrail? (log them to S3)
+24. How do we intgrate cloudwatch with eventbridge vs cloudtrail with eventbridge? Where does SNS comes into place?
+25. Where does AWS config come into the picture of monitoring, audit and loggin? Is it possible to aggregate across regions and accounts for all the monitoring services?
+26. How to make custom config rules? (AWS Lambda)
+27. Are the rules checked periodically or if there is any change?
+28. Why do we have SSM automation for remediations if we can connect cloudwatch config with eventbridge?
