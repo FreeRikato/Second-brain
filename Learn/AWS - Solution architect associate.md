@@ -801,3 +801,5 @@ Redis Elasticache => Under Elasticache, get started ->
 2. Is the metric captured periodically, scheduled or streamed? How to filter specific metrics from the cloudwatch metric service?
 3. Do services store logs by default? Where are the logs stored actually? Differentiate log groups, log streams and log policies
 4. Differentiate cloudwatch logs vs unified agent. How to search and analyze log data stored in cloudwatch logs? (cloudwatch logs insights)
+5. What are cloudwatch logs subscriptions? How are they different from the streams? Can this subscription be configured to watch multi account cloudwatch logs and store it? (Yes, Kinesis data firehosti -> S3) What is log aggregation?
+6. 
