@@ -833,4 +833,6 @@ Redis Elasticache => Under Elasticache, get started ->
 3. What are Service control policies and how do they aid in sercurity?
 4. Draw the relation between root account, iam users, aws organization, main account, management account, member account, organizational unit, iam policies, service control policies and iam groups
 5. What if there is fullawsaccess + allow policy in a SCP? Don't scp carried down to child OUs?
-6. 
+6. Does AWS accounts with allowaccess to resources in the same organization get all the resources shared between them?
+7. What is the role of tag policies?
+8. How useful can IAM conditions be?
