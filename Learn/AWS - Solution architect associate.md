@@ -842,3 +842,20 @@ Redis Elasticache => Under Elasticache, get started ->
 12. Explain domain controllers in MS AD. What is the idea of Microsoft active directory? What are the ways to create an AD on AWS? (managed MS AD, AD Connector, Simple AD)
 13. Compare active directory setup - aws managed MS AD and self-managed AD.
 14. How to automate multi-account AWS environment? (AWS Control tower) Compare the different guardrails (SCP - Preventive guardrail, AWS Config - Detective guardrail)
+
+
+## AWS Security & Encryption: KMS, SSM Parameter store, Shield & WAF
+
+1. What is envelope encryption? When to use what - SSL/TLS in-flight, Server side encryption at rest and Client side encryption
+2. What are KMS keys and what are the types present? (Symmetric vs Asymmetric, AWS Owned keys vs Managed keys vs Customer managed keys)
+3. How to copy encrypted snapshots across regions? (do we decrypt the snapshots and then re encrypt)
+4. How to copy encrypted snapshots across accounts? (custom kms key policy)
+5. What is the need for a multi-region key? What is social security number? Is it primary key?
+6. Does AWS offer a service to store configuration and secrets in a secured way? (SSM Parameter store) What is a parameter policy? (TTL)
+7. Can the names or prefixes of the names of different parameter in SSM parameter store be the same?
+8. What is the difference between SSM parameter store and AWS Secrets manager?
+9. Differentiate public and private TLS certificates. Why is it not posisble to use ACM with EC2? (can't be extracted)
+10. What are the steps to requesting public certiciates?
+11. Differentiate KMS and CloudHSM (Hardware security module)
+12. Web access control list vs web application firewall, what is the relation?
+13. What is the capacity in rules under WAF?
