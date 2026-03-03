@@ -825,3 +825,12 @@ Redis Elasticache => Under Elasticache, get started ->
 26. How to make custom config rules? (AWS Lambda)
 27. Are the rules checked periodically or if there is any change?
 28. Why do we have SSM automation for remediations if we can connect cloudwatch config with eventbridge?
+
+## IAM - Advanced
+
+1. Does AWS organizations support multple aws root accounts? Is main account and root account the same then member accounts and iam users the same?
+2. Why to have this AWS organizations feature in the first place? What is organizational unit? List out the hierarchy within OU?
+3. What are Service control policies and how do they aid in sercurity?
+4. Draw the relation between root account, iam users, aws organization, main account, management account, member account, organizational unit, iam policies, service control policies and iam groups
+5. What if there is fullawsaccess + allow policy in a SCP? Don't scp carried down to child OUs?
+6. 
