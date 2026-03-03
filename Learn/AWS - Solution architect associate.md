@@ -793,3 +793,11 @@ Redis Elasticache => Under Elasticache, get started ->
 7. What about building ML models i.e. labeling, buidling, training and tuning where it can be done in one place inside AWS? (SageMaker)
 8. Is Amazon kendra cloud based RAG?
 9. How about personalized recommmendations in real time? (Personalize)
+10. Which service in AWS is offered OCR service using AI/ML? (Textract)
+
+## AWS Monitoring & Audit: Cloudwatch, Cloudtrail & Config
+
+1. What are namespaces in metrics? Is this a monitoring/alerting/scaling service? What is the relation between dimension, metric and namespaces
+2. Is the metric captured periodically, scheduled or streamed? How to filter specific metrics from the cloudwatch metric service?
+3. Do services store logs by default? Where are the logs stored actually? Differentiate log groups, log streams and log policies
+4. Differentiate cloudwatch logs vs unified agent. How to search and analyze log data stored in cloudwatch logs? (cloudwatch logs insights)
