@@ -836,3 +836,9 @@ Redis Elasticache => Under Elasticache, get started ->
 6. Does AWS accounts with allowaccess to resources in the same organization get all the resources shared between them?
 7. What is the role of tag policies?
 8. How useful can IAM conditions be?
+9. Draw the hierarchy of permissions for an action. (Explicit deny -> SCP -> resoure-based policy -> identity-based policy -> iam permission boundaries ->  session policy)
+10. Relate AWS single sign-on and iam identity center. 
+11. List out the components in AWS IAM identity center fine-grained permissions and assignments (Multi-account permissions, application assignments, Attribute-based access control)
+12. Explain domain controllers in MS AD. What is the idea of Microsoft active directory? What are the ways to create an AD on AWS? (managed MS AD, AD Connector, Simple AD)
+13. Compare active directory setup - aws managed MS AD and self-managed AD.
+14. How to automate multi-account AWS environment? (AWS Control tower) Compare the different guardrails (SCP - Preventive guardrail, AWS Config - Detective guardrail)
