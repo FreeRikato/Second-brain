@@ -873,3 +873,11 @@ Redis Elasticache => Under Elasticache, get started ->
 9. If one IGW per VPC then how will it scale horizontally?
 10. What if a EC2 instance is not auto assigned public IP?
 11. Why do we have same destination CIDRs in route tables for different subnets be it public or private?
+12. What is the difference between security group and NACL? Is NACL on top of subnet or vpc or AZ?
+13. What is the role last rule in NACL rules which is an asterisk?
+14. What are ephemeral ports? Are they customizable? Why to configure NACL with ephemeral ports?
+15. How to connect two VPCs from different regions/accounts and make them behave as if they are in same network?
+16. What is the relation between AWS private link and VPC endpoints? 
+17. What do you mean by every AWS service is publicly exposed with public url? 
+18. What is DNS name and why do we need it for creating VPC interface endpoint?
+19. How to debug network issues using VPC flow logs? 
