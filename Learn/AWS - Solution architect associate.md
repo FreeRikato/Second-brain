@@ -894,3 +894,7 @@ Redis Elasticache => Under Elasticache, get started ->
 30. How do VPC mirroing work under the hood? 
 31. Is it possible to have multiple CIDRs inside subnets/VPCs?
 32. Is it possible to have NAT Gateway for ipv6? (egress only internet gateway)
+
+## Disaster recovery
+
+1. How are AWS migration discovery service and application migration service related?
