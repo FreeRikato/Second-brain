@@ -880,4 +880,17 @@ Redis Elasticache => Under Elasticache, get started ->
 16. What is the relation between AWS private link and VPC endpoints? 
 17. What do you mean by every AWS service is publicly exposed with public url? 
 18. What is DNS name and why do we need it for creating VPC interface endpoint?
-19. How to debug network issues using VPC flow logs? 
+19. How to debug network issues using VPC flow logs?
+20. If we use vpc peering to connect two VPCs from different regions/accounts then how to connect VPC with an on premise infra
+21. What are the components of Site to Site VPN (virtual private gateway and customer gateway)
+22. Where does NAT-T come into picture? (Customer Gateway with private IP connection to virtual private gateway)
+23. Even after site to site vpn connection the connection doesn't work, Debug (enable route propagation + add ICMP protocol on inbound of SG)
+24. What is the difference between direct connect and site to site vpn connection?
+25. What are the components of direct connect (direct connect endpoint, customer router, private/public virtual interface, virtual private gateway for private virtual interface)
+26. What if i want a dedicated private connection to VPC from different regions? (Direct connect gateway)
+27. What are the different connection types? (Dedicated, Hosted)
+28. Which AWS service helps to decomplexify network topologies to connect thousands of private VPCs within each other + on premise across regions/accounts (Transit gateay)
+29. How to increase bandwidth of site to site vpn connection? (Using transit gateway with site to site equal cost multi path routing)
+30. How do VPC mirroing work under the hood? 
+31. Is it possible to have multiple CIDRs inside subnets/VPCs?
+32. Is it possible to have NAT Gateway for ipv6? (egress only internet gateway)
