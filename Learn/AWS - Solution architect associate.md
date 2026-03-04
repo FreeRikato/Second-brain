@@ -859,3 +859,17 @@ Redis Elasticache => Under Elasticache, get started ->
 11. Differentiate KMS and CloudHSM (Hardware security module)
 12. Web access control list vs web application firewall, what is the relation?
 13. What is the capacity in rules under WAF?
+
+## Networking - VPC
+
+1. Who is responsible for establishing private and public addresses with certain blocks of IPv4 addresses?
+2. What is the use of route table and network ACL?
+3. How many subets can be present inside a VPC across all regions and CIDRs per VPC + CIDR size for each CIDR?
+4. What does it mean for a route table to be explicitly associated with another subnet?
+5. What happens if the VPC CIDRs overlap with each other?
+6. What is the allowed CIDRs while creating VPC?
+7. What is a newtork broadcast address? Differentiate CIDR block and subnets? How many subnets can be created inside a CIDR?
+8. Why does subets reserve 5 ip addresses from the selected cidr?
+9. If one IGW per VPC then how will it scale horizontally?
+10. What if a EC2 instance is not auto assigned public IP?
+11. Why do we have same destination CIDRs in route tables for different subnets be it public or private?
