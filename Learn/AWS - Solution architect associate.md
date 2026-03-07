@@ -1,3 +1,7 @@
+# TODO
+
+Session 1: Go through IAM and Identity + Mock exam 3 results + Re write Mock exam 3
+
 To deploy a full stack application in little to none cost with absolute best performance? What services can be used?
 
 
